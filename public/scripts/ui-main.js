@@ -29,10 +29,11 @@ class ThemeUI {
         this.$themeDarkBtn = document.getElementById('theme-dark');
 
         let currentTheme = this.getCurrentTheme();
-        if (currentTheme === 'dark') {
-            this.setModeToDark();
-        } else if (currentTheme === 'light') {
+        if (currentTheme === 'light') {
             this.setModeToLight();
+        } else {
+            // Default to dark on first visit (or if preference is dark/auto)
+            this.setModeToDark();
         }
 
         this.$themeAutoBtn.addEventListener('click', _ => this.onClickAuto());
