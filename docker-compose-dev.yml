@@ -1,8 +1,8 @@
 version: "3"
 services:
-  pairdrop:
+  ximdrop:
     build: .
-    container_name: pairdrop
+    container_name: ximdrop
     restart: unless-stopped
     environment:
       - PUID=1000 # UID to run the application as

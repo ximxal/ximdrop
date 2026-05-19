@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import parser from "ua-parser-js";
-import {animals, colors, uniqueNamesGenerator} from "unique-names-generator";
+import {adjectives, animals, uniqueNamesGenerator} from "unique-names-generator";
 import {cyrb53, hasher} from "./helper.js";
 
 export default class Peer {
@@ -72,7 +72,7 @@ export default class Peer {
             if (ipv6_was_localized) {
                 console.debug("IPv6 client IP was localized to", this.conf.ipv6Localize, this.conf.ipv6Localize > 1 ? "segments" : "segment");
             }
-            console.debug("PairDrop uses:", this.ip);
+            console.debug("XimDrop uses:", this.ip);
             console.debug("IP is private:", this.ipIsPrivate(this.ip));
             console.debug("if IP is private, '127.0.0.1' is used instead");
             console.debug("----DEBUGGING-PEER-IP-END----");
@@ -163,7 +163,7 @@ export default class Peer {
         const displayName = uniqueNamesGenerator({
             length: 2,
             separator: ' ',
-            dictionaries: [colors, animals],
+            dictionaries: [adjectives, animals],
             style: 'capital',
             seed: cyrb53(this.id)
         })

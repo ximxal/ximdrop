@@ -14,7 +14,10 @@ class PeersUI {
         this.$shareModeDescriptorItem = $$('.shr-panel .descriptor-item');
         this.$shareModeDescriptorOther = $$('.shr-panel .descriptor-other');
         this.$shareModeCancelBtn = $$('.shr-panel .cancel-btn');
-        this.$shareModeEditBtn = $$('.shr-panel .edit-btn');
+        this.$shareModeEditBtn   = $$('.shr-panel .edit-btn');
+        this.$shareModeSendAllBtn = $$('.shr-panel .send-all-btn');
+        this.$selectFilesBtn     = $('select-files-btn');
+        this.$multiFileInput     = $('multi-file-input');
 
         this.peers = {};
 
@@ -47,6 +50,16 @@ class PeersUI {
 
 
         this.$shareModeCancelBtn.addEventListener('click', _ => this._deactivateShareMode());
+        this.$shareModeSendAllBtn.addEventListener('click', _ => this._sendToAll());
+
+        // multi-file select button
+        this.$multiFileInput.addEventListener('change', e => {
+            const files = [...e.target.files];
+            if (files.length > 0) {
+                Events.fire('activate-share-mode', { files, text: '' });
+            }
+            e.target.value = '';
+        });
 
         Events.on('peer-display-name-changed', e => this._onPeerDisplayNameChanged(e));
 
@@ -84,7 +97,7 @@ class PeersUI {
             await this._deactivateShareMode();
         }
 
-        // close About PairDrop page on Escape
+        // close About XimDrop page on Escape
         if (e.key === "Escape") {
             window.location.hash = '#';
         }
@@ -339,6 +352,15 @@ class PeersUI {
         });
     }
 
+    _sendToAll() {
+        if (!this.shareMode.active) return;
+        const peerIds = Object.keys(this.peers);
+        if (peerIds.length === 0) return;
+        peerIds.forEach(peerId => {
+            Events.fire('share-mode-pointerdown', { peerId });
+        });
+    }
+
     async _reloadShareMode() {
         // If shareMode is active only
         if (!this.shareMode.active) return;
@@ -456,14 +478,15 @@ class PeerUI {
                     <div class="device-name font-body2"></div>
                     <div class="status font-body2"></div>
                 </div>
+                <div class="cancel-hint">✕ Tap to cancel</div>
             </label>`;
 
         this.$el.querySelector('svg use').setAttribute('xlink:href', this._icon());
         this.$el.querySelector('.name').textContent = this._displayName();
         this.$el.querySelector('.device-name').textContent = this._deviceName();
 
-        this.$label = this.$el.querySelector('label');
-        this.$input = this.$el.querySelector('input');
+        this.$label   = this.$el.querySelector('label');
+        this.$input   = this.$el.querySelector('input');
     }
 
     addTypesToClassList() {
@@ -485,6 +508,12 @@ class PeerUI {
         this.addTypesToClassList();
 
         this.html();
+
+        // Fire cancel when card is clicked during an active transfer
+        this.$el.addEventListener('click', () => {
+            if (!this.$el.hasAttribute('status')) return;
+            Events.fire('cancel-transfer', {peerId: this._peer.id});
+        });
 
         this._createCallbacks();
 
@@ -633,12 +662,16 @@ class PeerUI {
                 this.$el.querySelector('.status').innerText = statusName;
                 this.currentStatus = status;
             }
+            // Disable file input so the label click fires cancel instead of opening file picker
+            this.$input.disabled = true;
         }
         else {
             this.$el.removeAttribute('status');
             this.$el.querySelector('.status').innerHTML = '';
             progress = 0;
             this.currentStatus = null;
+            // Re-enable file input (unless share mode keeps it disabled)
+            if (!this._shareMode.active) this.$input.disabled = false;
         }
         const degrees = `rotate(${360 * progress}deg)`;
         $progress.style.setProperty('--progress', degrees);
@@ -747,7 +780,7 @@ class Dialog {
             document.activeElement.blur();
             window.blur();
         }
-        document.title = 'PairDrop | Transfer Files Cross-Platform. No Setup, No Signup.';
+        document.title = 'XimDrop | Transfer Files Cross-Platform. No Setup, No Signup.';
         changeFavicon("images/favicon-96x96.png");
         this.correspondingPeerId = undefined;
     }
@@ -777,7 +810,7 @@ class LanguageSelectDialog extends Dialog {
         this.$languageSelectBtn = $('language-selector');
         this.$languageSelectBtn.addEventListener('click', _ => this.show());
 
-        this.$languageButtons = this.$el.querySelectorAll(".language-buttons .btn");
+        this.$languageButtons = this.$el.querySelectorAll(".lang-btn");
         this.$languageButtons.forEach($btn => {
             $btn.addEventListener("click", e => this.selectLanguage(e));
         })
@@ -796,7 +829,7 @@ class LanguageSelectDialog extends Dialog {
         let locale = Localization.getLocale();
         this.currentLanguageBtn = Localization.isSystemLocale()
             ? this.$languageButtons[0]
-            : this.$el.querySelector(`.btn[value="${locale}"]`);
+            : this.$el.querySelector(`.lang-btn[value="${locale}"]`);
 
         this.currentLanguageBtn.classList.add("current");
 
@@ -811,7 +844,7 @@ class LanguageSelectDialog extends Dialog {
 
     selectLanguage(e) {
         e.preventDefault()
-        let languageCode = e.target.value;
+        let languageCode = e.currentTarget.value;
 
         if (languageCode) {
             localStorage.setItem('language_code', languageCode);
@@ -1017,7 +1050,7 @@ class ReceiveFileDialog extends ReceiveDialog {
                 hours = hours.length < 2 ? "0" + hours : hours;
                 let minutes = now.getMinutes().toString();
                 minutes = minutes.length < 2 ? "0" + minutes : minutes;
-                filenameDownload = `PairDrop_files_${year+month+date}_${hours+minutes}.zip`;
+                filenameDownload = `XimDrop_files_${year+month+date}_${hours+minutes}.zip`;
             } catch (e) {
                 console.error(e);
                 downloadZipped = false;
@@ -1048,8 +1081,8 @@ class ReceiveFileDialog extends ReceiveDialog {
         };
 
         document.title = files.length === 1
-            ? `${ Localization.getTranslation("document-titles.file-received") } - PairDrop`
-            : `${ Localization.getTranslation("document-titles.file-received-plural", null, {count: files.length}) } - PairDrop`;
+            ? `${ Localization.getTranslation("document-titles.file-received") } - XimDrop`
+            : `${ Localization.getTranslation("document-titles.file-received-plural", null, {count: files.length}) } - XimDrop`;
         changeFavicon("images/favicon-96x96-notification.png");
 
         Events.fire('set-progress', {peerId: peerId, progress: 1, status: 'process'})
@@ -1155,7 +1188,7 @@ class ReceiveRequestDialog extends ReceiveDialog {
 
         this.$receiveTitle.innerText = transferRequestTitle;
 
-        document.title =  `${transferRequestTitle} - PairDrop`;
+        document.title =  `${transferRequestTitle} - XimDrop`;
         changeFavicon("images/favicon-96x96-notification.png");
 
         this.$acceptRequestBtn.removeAttribute('disabled');
@@ -2146,8 +2179,8 @@ class ReceiveTextDialog extends Dialog {
 
     _setDocumentTitleMessages() {
         document.title = this._receiveTextQueue.length <= 1
-            ? `${ Localization.getTranslation("document-titles.message-received") } - PairDrop`
-            : `${ Localization.getTranslation("document-titles.message-received-plural", null, {count: this._receiveTextQueue.length + 1}) } - PairDrop`;
+            ? `${ Localization.getTranslation("document-titles.message-received") } - XimDrop`
+            : `${ Localization.getTranslation("document-titles.message-received-plural", null, {count: this._receiveTextQueue.length + 1}) } - XimDrop`;
     }
 
     async _onCopy() {
@@ -2673,7 +2706,7 @@ class WebShareTargetUI {
             }
         }
         else if (shareTargetType === "files") {
-            let openRequest = window.indexedDB.open('pairdrop_store')
+            let openRequest = window.indexedDB.open('ximdrop_store')
             openRequest.onsuccess = e => {
                 const db = e.target.result;
                 const tx = db.transaction('share_target_files', 'readwrite');

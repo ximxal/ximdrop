@@ -1,8 +1,8 @@
 version: "3"
 services:
-  pairdrop:
-    image: "lscr.io/linuxserver/pairdrop:latest"
-    container_name: pairdrop
+  ximdrop:
+    image: "lscr.io/linuxserver/ximdrop:latest"
+    container_name: ximdrop
     restart: unless-stopped
     volumes:
       - ./rtc_config.json:/home/node/app/rtc_config.json
@@ -28,4 +28,4 @@ services:
       - "5349:5349"
       - "5349:5349/udp"
       - "10000-20000:10000-20000/udp"
-    # see guide at docs/host-your-own.md#coturn-and-pairdrop-via-docker-compose
+    # see guide at docs/host-your-own.md#coturn-and-ximdrop-via-docker-compose

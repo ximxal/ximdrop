@@ -34,11 +34,11 @@ If applicable, add screenshots to help explain your problem.
  - Browser [e.g. stock browser, safari]
  - Version [e.g. 22]
 
-**Bug occurs on official PairDrop instance https://pairdrop.net/**
+**Bug occurs on official XimDrop instance https://ximdrop.net/**
 No | Yes
 Version: v1.11.2
 
-**Bug occurs on self-hosted PairDrop instance**
+**Bug occurs on self-hosted XimDrop instance**
 No | Yes
 
 **Self-Hosted Setup**

@@ -1,8 +1,8 @@
 version: "3"
 services:
-  pairdrop:
-    image: "lscr.io/linuxserver/pairdrop:latest"
-    container_name: pairdrop
+  ximdrop:
+    image: "lscr.io/linuxserver/ximdrop:latest"
+    container_name: ximdrop
     restart: unless-stopped
     environment:
       - PUID=1000 # UID to run the application as

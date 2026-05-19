@@ -12,7 +12,7 @@ https://www.cdc.gov/niosh/mining/tools/installpwa.html
 
 
 **Chromium-based browser on Desktop (Chrome, Edge, Vivaldi, Brave, etc.)** \
-Easily install PairDrop PWA on your desktop by clicking the install-button in the top-right corner while on [pairdrop.net](https://pairdrop.net).
+Easily install XimDrop PWA on your desktop by clicking the install-button in the top-right corner while on [ximdrop.net](https://ximdrop.net).
 
 <img width="400" src="pwa-install.png" alt="Example on how to install a pwa with Edge">
 
@@ -21,13 +21,13 @@ On Firefox, PWAs are installable via [this browser extensions](https://addons.mo
 
 **Android** \
 PWAs are installable only by using Google Chrome or Samsung Browser:
-1. Visit [pairdrop.net](https://pairdrop.net)
+1. Visit [ximdrop.net](https://ximdrop.net)
 2. Click _Install_ on the installation pop-up or use the three-dot-menu and click on _Add to Home screen_
 3. Click _Add_ on the pop-up
 
 **iOS** \
 PWAs are installable only by using Safari:
-1. Visit [pairdrop.net](https://pairdrop.net)
+1. Visit [ximdrop.net](https://ximdrop.net)
 2. Click on the share icon
 3. Click _Add to Home Screen_
 4. Click _Add_ in the top right corner
@@ -36,7 +36,7 @@ PWAs are installable only by using Safari:
 
 **Self-Hosted Instance?** \
 To be able to install the PWA from a self-hosted instance, the connection needs to be [established through HTTPS](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installable_PWAs).
-See [this host your own section](https://github.com/schlagmichdoch/PairDrop/blob/master/docs/host-your-own.md#testing-pwa-related-features) for more info.
+See [this host your own section](https://github.com/schlagmichdoch/XimDrop/blob/master/docs/host-your-own.md#testing-pwa-related-features) for more info.
 
 <br>
 
@@ -119,7 +119,7 @@ Yes.
 
 <br>
 
-These third-party apps are compatible with PairDrop:
+These third-party apps are compatible with XimDrop:
 
 1. [Snapdrop Android App](https://github.com/fm-sys/snapdrop-android)
 2. [Snapdrop for Firefox (Addon)](https://github.com/ueen/SnapdropFirefoxAddon)
@@ -144,13 +144,13 @@ If the devices are on the same network,
 none of your files are ever sent to any server.
 
 If your devices are paired and behind a NAT,
-the PairDrop TURN Server is used to route your files and messages.
+the XimDrop TURN Server is used to route your files and messages.
 See the [Technical Documentation](technical-documentation.md#encryption-webrtc-stun-and-turn)
 to learn more about STUN, TURN and WebRTC.
 
 If you host your own instance
 and want to support devices that do not support WebRTC,
-you can [start the PairDrop instance with an activated WebSocket fallback](https://github.com/schlagmichdoch/PairDrop/blob/master/docs/host-your-own.md#websocket-fallback-for-vpn).
+you can [start the XimDrop instance with an activated WebSocket fallback](https://github.com/schlagmichdoch/XimDrop/blob/master/docs/host-your-own.md#websocket-fallback-for-vpn).
 
 <br>
 
@@ -164,15 +164,15 @@ you can [start the PairDrop instance with an activated WebSocket fallback](https
 <br>
 
 Files are sent directly between peers.
-PairDrop doesn't even use a database.
-If curious, study [the signaling server](https://github.com/schlagmichdoch/PairDrop/blob/master/server/ws-server.js).
+XimDrop doesn't even use a database.
+If curious, study [the signaling server](https://github.com/schlagmichdoch/XimDrop/blob/master/server/ws-server.js).
 WebRTC encrypts the files in transit.
 
 If the devices are on the same network,
 none of your files are ever sent to any server.
 
 If your devices are paired and behind a NAT,
-the PairDrop TURN Server is used to route your files and messages.
+the XimDrop TURN Server is used to route your files and messages.
 See the [Technical Documentation](technical-documentation.md#encryption-webrtc-stun-and-turn)
 to learn more about STUN, TURN and WebRTC.
 
@@ -188,8 +188,8 @@ to learn more about STUN, TURN and WebRTC.
 <br>
 
 Yes. Your files are sent using WebRTC, encrypting them in transit.
-Still you have to trust the PairDrop server. To ensure the connection is secure and there is no [MITM](https://en.m.wikipedia.org/wiki/Man-in-the-middle_attack) there is a plan to make PairDrop
-zero trust by encrypting the signaling and implementing a verification process. See [issue #180](https://github.com/schlagmichdoch/PairDrop/issues/180) to keep updated.
+Still you have to trust the XimDrop server. To ensure the connection is secure and there is no [MITM](https://en.m.wikipedia.org/wiki/Man-in-the-middle_attack) there is a plan to make XimDrop
+zero trust by encrypting the signaling and implementing a verification process. See [issue #180](https://github.com/schlagmichdoch/XimDrop/issues/180) to keep updated.
 
 <br>
 
@@ -226,7 +226,7 @@ Then, all data should be sent directly between devices and not use your data pla
 
 <br>
 
-Snapdrop and PairDrop are a study in radical simplicity.
+Snapdrop and XimDrop are a study in radical simplicity.
 The user interface is insanely simple.
 Features are chosen very carefully because complexity grows quadratically
 since every feature potentially interferes with each other feature.
@@ -243,17 +243,17 @@ and/or *Thinking, Fast and Slow* to learn more.
 
 <details>
 <summary style="font-size:1.25em;margin-top: 24px; margin-bottom: 16px; font-weight: var(--base-text-weight-semibold, 600); line-height: 1.25;">
-    PairDrop is awesome. How can I support it? 
+    XimDrop is awesome. How can I support it? 
 </summary>
 
 <br>
 
-* [Buy me a coffee](https://www.buymeacoffee.com/pairdrop) to pay for the domain and the server, and support libre software.
-* [File bugs, give feedback, submit suggestions](https://github.com/schlagmichdoch/pairdrop/issues)
-* Share PairDrop on social media.
+* [Buy me a coffee](https://www.buymeacoffee.com/ximdrop) to pay for the domain and the server, and support libre software.
+* [File bugs, give feedback, submit suggestions](https://github.com/schlagmichdoch/ximdrop/issues)
+* Share XimDrop on social media.
 * Fix bugs and create a pull request.
 * Do some security analysis and make suggestions.
-* Participate in [active discussions](https://github.com/schlagmichdoch/PairDrop/discussions)
+* Participate in [active discussions](https://github.com/schlagmichdoch/XimDrop/discussions)
 
 <br>
 

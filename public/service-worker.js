@@ -1,5 +1,5 @@
-const cacheVersion = 'v1.11.2';
-const cacheTitle = `pairdrop-cache-${cacheVersion}`;
+const cacheVersion = 'v2.1.19';
+const cacheTitle = `ximdrop-cache-${cacheVersion}`;
 const relativePathsToCache = [
     './',
     'index.html',
@@ -21,6 +21,7 @@ const relativePathsToCache = [
     'scripts/libs/zip.min.js',
     'sounds/blop.mp3',
     'sounds/blop.ogg',
+    'images/donate-qr.jpg',
     'images/favicon-96x96.png',
     'images/favicon-96x96-notification.png',
     'images/android-chrome-192x192.png',
@@ -60,6 +61,7 @@ const relativePathsToCache = [
     'lang/ta.json',
     'lang/tr.json',
     'lang/uk.json',
+    'lang/th.json',
     'lang/zh-CN.json',
     'lang/zh-HK.json',
     'lang/zh-TW.json'
@@ -217,7 +219,7 @@ const evaluateRequestData = function (request) {
         const url = formData.get("url");
         const files = formData.getAll("allfiles");
 
-        const pairDropUrl = request.url;
+        const ximDropUrl = request.url;
 
         if (files && files.length > 0) {
             let fileObjects = [];
@@ -228,7 +230,7 @@ const evaluateRequestData = function (request) {
                 });
             }
 
-            const DBOpenRequest = indexedDB.open('pairdrop_store');
+            const DBOpenRequest = indexedDB.open('ximdrop_store');
             DBOpenRequest.onsuccess = e => {
                 const db = e.target.result;
                 for (let i = 0; i < fileObjects.length; i++) {
@@ -237,12 +239,12 @@ const evaluateRequestData = function (request) {
 
                     const objectStoreRequest = objectStore.add(fileObjects[i]);
                     objectStoreRequest.onsuccess = _ => {
-                        if (i === fileObjects.length - 1) resolve(pairDropUrl + '?share_target=files');
+                        if (i === fileObjects.length - 1) resolve(ximDropUrl + '?share_target=files');
                     }
                 }
             }
             DBOpenRequest.onerror = _ => {
-                resolve(pairDropUrl);
+                resolve(ximDropUrl);
             }
         }
         else {
@@ -252,7 +254,7 @@ const evaluateRequestData = function (request) {
             if (text) urlArgument += `&text=${text}`;
             if (url) urlArgument += `&url=${url}`;
 
-            resolve(pairDropUrl + urlArgument);
+            resolve(ximDropUrl + urlArgument);
         }
     });
 }

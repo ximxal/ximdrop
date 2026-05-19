@@ -5,21 +5,21 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <!-- Web App Config -->
-    <title>PairDrop | Transfer Files Cross-Platform. No Setup, No Signup.</title>
+    <title>XimDrop | Transfer Files Cross-Platform. No Setup, No Signup.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#3367d6">
+    <meta name="theme-color" content="#7c3aed">
     <meta name="color-scheme" content="dark light">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="PairDrop">
-    <meta name="application-name" content="PairDrop">
+    <meta name="apple-mobile-web-app-title" content="XimDrop">
+    <meta name="application-name" content="XimDrop">
     <!-- Descriptions -->
     <meta name="description" content="Instantly share images, videos, PDFs, and links with people nearby. Peer2Peer and Open Source. No Setup, No Signup.">
     <meta name="keywords" content="File, Transfer, Share, Peer2Peer">
     <meta name="author" content="schlagmichdoch">
-    <meta property="og:title" content="PairDrop">
+    <meta property="og:title" content="XimDrop">
     <meta property="og:type" content="article">
-    <meta property="og:url" content="https://pairdrop.net/">
+    <meta property="og:url" content="https://ximdrop.net/">
     <meta property="og:author" content="https://github.com/schlagmichdoch">
     <meta name="twitter:author" content="@schlagmichdoch">
     <meta name="twitter:card" content="summary_large_image">
@@ -42,67 +42,125 @@
 </head>
 
 <body translate="no">
-    <header class="row-reverse wrap opacity-0">
-        <a href="#about" class="icon-button" data-i18n-key="header.about" data-i18n-attrs="title aria-label">
-            <svg class="icon">
-                <use xlink:href="#info-outline"></use>
-            </svg>
-        </a>
-        <div id="language-selector" class="icon-button" data-i18n-key="header.language-selector" data-i18n-attrs="title">
-            <svg class="icon">
-                <use xlink:href="#icon-language-selector"></use>
-            </svg>
+    <header class="opacity-0" id="main-header">
+        <!-- Left: Brand + Identity -->
+        <div id="header-left">
+            <div id="brand-wordmark">Xim<span>Drop</span></div>
+            <div id="header-identity">
+                <div class="known-as-wrapper">
+                    <span data-i18n-key="footer.known-as" data-i18n-attrs="text"></span>
+                    <div id="display-name" class="badge" data-i18n-key="footer.display-name" data-i18n-attrs="data-placeholder title" autocorrect="off" autocomplete="off" autocapitalize="none" spellcheck="false" contenteditable></div>
+                    <svg class="icon edit-pen">
+                        <use xlink:href="#edit-pen-icon"></use>
+                    </svg>
+                    <div id="name-suggestions" hidden></div>
+                </div>
+                <div class="discovery-wrapper">
+                    <span data-i18n-key="footer.discovery" data-i18n-attrs="text"></span>
+                    <span class="badge badge-room-ip" data-i18n-key="footer.on-this-network" data-i18n-attrs="text title"></span>
+                    <span class="badge badge-room-secret pointer" data-i18n-key="footer.paired-devices" data-i18n-attrs="text title" hidden></span>
+                    <span class="badge badge-room-public-id pointer" data-i18n-key="footer.public-room-devices" data-i18n-attrs="title" hidden>in room IAIAI</span>
+                </div>
+            </div>
+            <!-- Connection status dot -->
+            <div id="conn-status" class="conn-dot" title="Server connection"></div>
         </div>
-        <div id="theme-wrapper">
-            <div id="theme-auto" class="icon-button selected" data-i18n-key="header.theme-auto" data-i18n-attrs="title">
-                <svg class="icon">
-                    <use xlink:href="#icon-theme-auto"></use>
+        <!-- Right: Single menu button + hidden originals -->
+        <div id="header-right">
+
+            <!-- Hidden original elements (JS still needs these) -->
+            <div style="display:none" aria-hidden="true">
+                <a href="#about" id="_orig-about" class="icon-button"></a>
+                <div id="language-selector" class="icon-button"></div>
+                <div id="theme-wrapper">
+                    <div id="theme-auto" class="icon-button selected"></div>
+                    <div><div id="theme-light" class="icon-button"></div><div id="theme-dark" class="icon-button"></div></div>
+                </div>
+                <div id="notification" class="icon-button" hidden></div>
+                <div id="install" class="icon-button" hidden></div>
+                <div id="pair-device" class="icon-button"></div>
+                <div id="edit-paired-devices" class="icon-button" hidden></div>
+                <div id="join-public-room" class="icon-button"></div>
+                <div id="expand" class="icon-button" hidden></div>
+            </div>
+
+            <!-- Visible menu button -->
+            <button id="menu-btn" class="icon-button" aria-label="Menu" title="Menu">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <circle cx="10" cy="4"  r="1.5" fill="currentColor"/>
+                    <circle cx="10" cy="10" r="1.5" fill="currentColor"/>
+                    <circle cx="10" cy="16" r="1.5" fill="currentColor"/>
                 </svg>
-            </div>
-            <div>
-                <div id="theme-light" class="icon-button" data-i18n-key="header.theme-light" data-i18n-attrs="title">
-                    <svg class="icon">
-                        <use xlink:href="#icon-theme-light"></use>
-                    </svg>
-                </div>
-                <div id="theme-dark" class="icon-button" data-i18n-key="header.theme-dark" data-i18n-attrs="title">
-                    <svg class="icon">
-                        <use xlink:href="#icon-theme-dark"></use>
-                    </svg>
-                </div>
-            </div>
-        </div>
-        <div id="notification" class="icon-button" data-i18n-key="header.notification" data-i18n-attrs="title" hidden>
-            <svg class="icon">
-                <use xlink:href="#notifications"></use>
-            </svg>
-        </div>
-        <div id="install" class="icon-button" data-i18n-key="header.install" data-i18n-attrs="title" hidden>
-            <svg class="icon">
-                <use xlink:href="#homescreen"></use>
-            </svg>
-        </div>
-        <div id="pair-device" class="icon-button" data-i18n-key="header.pair-device" data-i18n-attrs="title">
-            <svg class="icon">
-                <use xlink:href="#pair-device-icon"></use>
-            </svg>
-        </div>
-        <div id="edit-paired-devices" class="icon-button" data-i18n-key="header.edit-paired-devices" data-i18n-attrs="title" hidden>
-            <svg class="icon">
-                <use xlink:href="#edit-pair-devices-icon"></use>
-            </svg>
-        </div>
-        <div id="join-public-room" class="icon-button" data-i18n-key="header.join-public-room" data-i18n-attrs="title">
-            <svg class="icon">
-                <use xlink:href="#public-room-icon"></use>
-            </svg>
-        </div>
-        <div id="expand" class="icon-button" data-i18n-key="header.expand" data-i18n-attrs="title" hidden>
-            <svg class="icon">
-                <use xlink:href="#caret"></use>
-            </svg>
-        </div>
+            </button>
+        </div><!-- end header-right -->
     </header>
+
+    <!-- Dropdown panel — lives in body to escape header stacking context -->
+    <div id="menu-dropdown" aria-hidden="true">
+        <div class="menu-section-label">General</div>
+        <button class="menu-item" id="mi-about">
+            <span class="mi-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></span>
+            <span class="mi-label">GitHub</span>
+        </button>
+        <button class="menu-item" id="mi-lang">
+            <span class="mi-icon"><svg viewBox="0 0 24 24"><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg></span>
+            <span class="mi-label">Language</span>
+        </button>
+        <div class="menu-divider"></div>
+        <div class="menu-section-label">Appearance</div>
+        <button class="menu-item" id="mi-theme-auto">
+            <span class="mi-icon"><svg viewBox="-54 -54 620 620"><path d="M448 256c0-106-86-192-192-192V448c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"/></svg></span>
+            <span class="mi-label">Auto</span>
+            <span class="menu-check" id="check-auto">✓</span>
+        </button>
+        <button class="menu-item" id="mi-theme-light">
+            <span class="mi-icon"><svg viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg></span>
+            <span class="mi-label">Light</span>
+            <span class="menu-check" id="check-light">✓</span>
+        </button>
+        <button class="menu-item" id="mi-theme-dark">
+            <span class="mi-icon"><svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4C12.92 3.04 12.46 3 12 3z"/></svg></span>
+            <span class="mi-label">Dark</span>
+            <span class="menu-check" id="check-dark">✓</span>
+        </button>
+        <div class="menu-divider"></div>
+        <div class="menu-section-label">Connect</div>
+        <button class="menu-item" id="mi-pair">
+            <span class="mi-icon"><svg viewBox="0 0 640 512"><path d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"/></svg></span>
+            <span class="mi-label">Xim Device</span>
+        </button>
+        <button class="menu-item" id="mi-edit-pairs">
+            <span class="mi-icon"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></span>
+            <span class="mi-label">Manage Xim</span>
+        </button>
+        <button class="menu-item" id="mi-public-room">
+            <span class="mi-icon"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></span>
+            <span class="mi-label">Public Room</span>
+        </button>
+        <button class="menu-item" id="mi-install" style="display:none">
+            <span class="mi-icon"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></span>
+            <span class="mi-label">Install App</span>
+        </button>
+        <button class="menu-item" id="mi-notif" style="display:none">
+            <span class="mi-icon"><svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></span>
+            <span class="mi-label">Notifications</span>
+        </button>
+        <div class="menu-divider"></div>
+        <button class="menu-item" id="mi-donate">
+            <span class="mi-icon mi-icon--donate"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
+            <span class="mi-label">Donate</span>
+        </button>
+    </div>
+
+    <!-- Donate dialog -->
+    <div id="donate-overlay" aria-hidden="true">
+        <div id="donate-dialog">
+            <button id="donate-close" aria-label="Close">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </button>
+            <img id="donate-qr" src="images/donate-qr.jpg" alt="PromptPay QR Code">
+        </div>
+    </div>
     <!-- Center -->
     <div id="center" class="opacity-0">
         <!-- Peers -->
@@ -112,21 +170,30 @@
             <div data-i18n-key="instructions.no-peers-subtitle" data-i18n-attrs="text"></div>
         </x-no-peers>
         <x-instructions class="grow fade-in" data-i18n-key="instructions.x-instructions" data-i18n-attrs="desktop mobile data-drop-peer data-drop-bg"></x-instructions>
+        <!-- Peer search (last = top in column-reverse flex) -->
+        <div id="peer-search-bar" hidden>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            <input id="peer-search" type="text" placeholder="Search peers…" autocomplete="off" autocorrect="off" spellcheck="false">
+            <button id="peer-search-clear" aria-label="Clear" hidden>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </button>
+        </div>
+        <!-- Hidden multi-file input -->
+        <input type="file" id="multi-file-input" multiple style="display:none">
+        <!-- Select files button (visible when peers present) -->
+        <label id="select-files-btn" for="multi-file-input" title="Select files to send">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-1 8h-3v3h-2v-3h-3v-2h3V9h2v3h3v2z"/></svg>
+            <span>Select Files</span>
+        </label>
         <div class="shr-panel panel column" hidden>
             <div class="row">
                 <div class="thumb center">
                     <div class="text-thumb row" hidden>
-                        <svg>
-                            <use xlink:href="#font"></use>
-                        </svg>
-                        <svg>
-                            <use xlink:href="#i-cursor"></use>
-                        </svg>
+                        <svg><use xlink:href="#font"></use></svg>
+                        <svg><use xlink:href="#i-cursor"></use></svg>
                     </div>
                     <div class="file-thumb" hidden>
-                        <svg>
-                            <use xlink:href="#file"></use>
-                        </svg>
+                        <svg><use xlink:href="#file"></use></svg>
                     </div>
                     <div class="image-thumb" hidden></div>
                 </div>
@@ -138,6 +205,7 @@
             <div class="center btn-row wrap">
                 <div class="cancel-btn btn btn-small btn-rounded btn-dark text-white" data-i18n-key="header.cancel-share-mode" data-i18n-attrs="text"></div>
                 <div class="edit-btn btn btn-small btn-rounded btn-dark text-white" data-i18n-key="header.edit-share-mode" data-i18n-attrs="text" hidden></div>
+                <div class="send-all-btn btn btn-small btn-rounded btn-primary text-white">Send to All</div>
             </div>
         </div>
         <div id="websocket-fallback" class="text-center" hidden>
@@ -146,36 +214,16 @@
             <span data-i18n-key="footer.webrtc" data-i18n-attrs="text"></span>
         </div>
     </div>
-    <!-- Footer -->
-    <footer class="column opacity-0">
-        <svg class="icon logo">
+    <!-- Footer (hidden, kept for gradient defs only) -->
+    <footer class="column opacity-0" style="display:none!important">
+        <svg style="position:absolute;width:0;height:0">
             <defs>
                 <linearGradient id="primaryGradient" gradientTransform="rotate(90)">
                     <stop offset="0%" class="start-color" />
                     <stop offset="100%" class="stop-color" />
                 </linearGradient>
             </defs>
-            <use xlink:href="#wifi-tethering" style="fill: url(#primaryGradient);"></use>
         </svg>
-        <div class="column">
-            <div class="known-as-wrapper">
-                <span data-i18n-key="footer.known-as" data-i18n-attrs="text"></span>
-                <div id="display-name" class="badge" data-i18n-key="footer.display-name" data-i18n-attrs="data-placeholder title" autocorrect="off" autocomplete="off" autocapitalize="none" spellcheck="false" contenteditable></div>
-                <svg class="icon edit-pen">
-                    <use xlink:href="#edit-pen-icon"></use>
-                </svg>
-            </div>
-            <div class="discovery-wrapper panel border row">
-                <div class="row center">
-                    <span data-i18n-key="footer.discovery" data-i18n-attrs="text"></span>
-                </div>
-                <div class="row center wrap">
-                    <span class="badge badge-room-ip" data-i18n-key="footer.on-this-network" data-i18n-attrs="text title"></span>
-                    <span class="badge badge-room-secret pointer" data-i18n-key="footer.paired-devices" data-i18n-attrs="text title" hidden></span>
-                    <span class="badge badge-room-public-id pointer" data-i18n-key="footer.public-room-devices" data-i18n-attrs="title" hidden>in room IAIAI</span>
-                </div>
-            </div>
-        </div>
     </footer>
     <!-- Language Select Dialog -->
     <x-dialog id="language-select-dialog">
@@ -184,179 +232,102 @@
                 <div class="row center p-2">
                     <h2 class="dialog-title" data-i18n-key="dialogs.language-selector-title" data-i18n-attrs="text"></h2>
                 </div>
-                <div class="language-buttons p2">
-                    <button class="btn fw wrap">
-                        <span data-i18n-key="dialogs.system-language" data-i18n-attrs="text"></span>
+                <!-- Search bar -->
+                <div class="lang-search-wrap">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                    <input id="lang-search" type="text" placeholder="Search language…" autocomplete="off" autocorrect="off" spellcheck="false">
+                </div>
+                <div class="language-buttons">
+                    <button class="lang-btn" data-label="System Default">
+                        <span class="lang-native" data-i18n-key="dialogs.system-language" data-i18n-attrs="text"></span>
+                        <span class="lang-english">System Default</span>
                     </button>
-                    <button class="btn fw wrap" value="ar">
-                        <span lang="ar" dir="rtl">العربية</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Arabic)</span>
+                    <button class="lang-btn" value="ar" data-label="Arabic العربية">
+                        <span class="lang-native" lang="ar" dir="rtl">العربية</span>
+                        <span class="lang-english">Arabic</span>
                     </button>
-                    <button class="btn fw wrap" value="be">
-                        <span lang="be">беларуская</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Belarusian)</span>
+                    <button class="lang-btn" value="zh-CN" data-label="Simplified Chinese 汉语">
+                        <span class="lang-native" lang="zh-CN">汉语</span>
+                        <span class="lang-english">Simplified Chinese</span>
                     </button>
-                    <button class="btn fw wrap" value="nb">
-                        <span lang="nb">Bokmål</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Norwegian Bokmål)</span>
+                    <button class="lang-btn" value="zh-TW" data-label="Traditional Chinese 漢語">
+                        <span class="lang-native" lang="zh-TW">漢語</span>
+                        <span class="lang-english">Traditional Chinese</span>
                     </button>
-                    <button class="btn fw wrap" value="bg">
-                        <span lang="bg">български</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Bulgarian)</span>
+                    <button class="lang-btn" value="zh-HK" data-label="Chinese Hant 中文">
+                        <span class="lang-native" lang="zh-HK">中文</span>
+                        <span class="lang-english">Chinese (HK)</span>
                     </button>
-                    <button class="btn fw wrap" value="ca">
-                        <span lang="ca">Català</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Catalan)</span>
+                    <button class="lang-btn" value="de" data-label="German Deutsch">
+                        <span class="lang-native" lang="de">Deutsch</span>
+                        <span class="lang-english">German</span>
                     </button>
-                    <button class="btn fw wrap" value="cs">
-                        <span lang="cs">Čeština</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Czech)</span>
+                    <button class="lang-btn" value="en" data-label="English">
+                        <span class="lang-native" lang="en">English</span>
+                        <span class="lang-english">English</span>
                     </button>
-                    <button class="btn fw wrap" value="da">
-                        <span lang="da">Dansk</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Danish)</span>
+                    <button class="lang-btn" value="es" data-label="Spanish Español">
+                        <span class="lang-native" lang="es">Español</span>
+                        <span class="lang-english">Spanish</span>
                     </button>
-                    <button class="btn fw wrap" value="de">
-                        <span lang="de">Deutsch</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(German)</span>
+                    <button class="lang-btn" value="fa" data-label="Persian فارسی">
+                        <span class="lang-native" lang="fa" dir="rtl">فارسی</span>
+                        <span class="lang-english">Persian</span>
                     </button>
-                    <button class="btn fw wrap" value="en">
-                        <span lang="en">English</span>
+                    <button class="lang-btn" value="fr" data-label="French Français">
+                        <span class="lang-native" lang="fr">Français</span>
+                        <span class="lang-english">French</span>
                     </button>
-                    <button class="btn fw wrap" value="es">
-                        <span lang="es">Español</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Spanish)</span>
+                    <button class="lang-btn" value="he" data-label="Hebrew עברית">
+                        <span class="lang-native" lang="he" dir="rtl">עִבְרִית</span>
+                        <span class="lang-english">Hebrew</span>
                     </button>
-                    <button class="btn fw wrap" value="et">
-                        <span lang="et">Eesti</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Estonian)</span>
+                    <button class="lang-btn" value="id" data-label="Indonesian Bahasa Indonesia">
+                        <span class="lang-native" lang="id">Bahasa Indonesia</span>
+                        <span class="lang-english">Indonesian</span>
                     </button>
-                    <button class="btn fw wrap" value="eu">
-                        <span lang="eu">Euskara</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Basque)</span>
+                    <button class="lang-btn" value="it" data-label="Italian Italiano">
+                        <span class="lang-native" lang="it">Italiano</span>
+                        <span class="lang-english">Italian</span>
                     </button>
-                    <button class="btn fw wrap" value="fa">
-                        <span lang="fa" dir="rtl">فارسی</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Persian)</span>
+                    <button class="lang-btn" value="ja" data-label="Japanese 日本語">
+                        <span class="lang-native" lang="ja">日本語</span>
+                        <span class="lang-english">Japanese</span>
                     </button>
-                    <button class="btn fw wrap" value="fr">
-                        <span lang="fr">Français</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(French)</span>
+                    <button class="lang-btn" value="ko" data-label="Korean 한국어">
+                        <span class="lang-native" lang="ko">한국어</span>
+                        <span class="lang-english">Korean</span>
                     </button>
-                    <button class="btn fw wrap" value="id">
-                        <span lang="id">Bahasa Indonesia</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Indonesian)</span>
+                    <button class="lang-btn" value="nl" data-label="Dutch Nederlands">
+                        <span class="lang-native" lang="nl">Nederlands</span>
+                        <span class="lang-english">Dutch</span>
                     </button>
-                    <button class="btn fw wrap" value="it">
-                        <span lang="it">Italiano</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Italian)</span>
+                    <button class="lang-btn" value="pl" data-label="Polish Polski">
+                        <span class="lang-native" lang="pl">Polski</span>
+                        <span class="lang-english">Polish</span>
                     </button>
-                    <button class="btn fw wrap" value="he">
-                        <span lang="he" dir="rtl">עִבְרִית</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Hebrew)</span>
+                    <button class="lang-btn" value="pt-BR" data-label="Portuguese Português do Brasil">
+                        <span class="lang-native" lang="pt-BR">Português do Brasil</span>
+                        <span class="lang-english">Portuguese (BR)</span>
                     </button>
-                    <button class="btn fw wrap" value="kn">
-                        <span lang="kn">ಕನ್ನಡ</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Kannada)</span>
+                    <button class="lang-btn" value="ru" data-label="Russian Русский">
+                        <span class="lang-native" lang="ru">Русский</span>
+                        <span class="lang-english">Russian</span>
                     </button>
-                    <button class="btn fw wrap" value="hu">
-                        <span lang="hu">Magyar</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Hungarian)</span>
+                    <button class="lang-btn" value="tr" data-label="Turkish Türkçe">
+                        <span class="lang-native" lang="tr">Türkçe</span>
+                        <span class="lang-english">Turkish</span>
                     </button>
-                    <button class="btn fw wrap" value="nl">
-                        <span lang="nl">Nederlands</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Dutch)</span>
+                    <button class="lang-btn" value="uk" data-label="Ukrainian Українська">
+                        <span class="lang-native" lang="uk">Українська</span>
+                        <span class="lang-english">Ukrainian</span>
                     </button>
-                    <button class="btn fw wrap" value="nn">
-                        <span lang="nn">Norsk</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Norwegian Nynorsk)</span>
-                    </button>
-                    <button class="btn fw wrap" value="pl">
-                        <span lang="pl">Polski</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Polish)</span>
-                    </button>
-                    <button class="btn fw wrap" value="pt-BR">
-                        <span lang="pt-BR">Português do Brasil</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Brazilian Portuguese)</span>
-                    </button>
-                    <button class="btn fw wrap" value="ro">
-                        <span lang="ro">Română</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Romanian)</span>
-                    </button>
-                    <button class="btn fw wrap" value="ru">
-                        <span lang="ru">Русский язык</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Russian)</span>
-                    </button>
-                    <button class="btn fw wrap" value="sk">
-                        <span lang="sk">Slovenčina</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Slovak)</span>
-                    </button>
-                    <button class="btn fw wrap" value="ta">
-                        <span lang="ta">தமிழ்</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Tamil)</span>
-                    </button>
-                    <button class="btn fw wrap" value="tr">
-                        <span lang="tr">Türkçe</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Turkish)</span>
-                    </button>
-                    <button class="btn fw wrap" value="uk">
-                        <span lang="uk">Українська</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Ukrainian)</span>
-                    </button>
-                    <button class="btn fw wrap" value="zh-CN">
-                        <span lang="zh-CN">汉语</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Simplified Chinese)</span>
-                    </button>
-                    <button class="btn fw wrap" value="zh-HK">
-                        <span lang="zh-HK">中文</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Hant Script)</span>
-                    </button>
-                    <button class="btn fw wrap" value="zh-TW">
-                        <span lang="zh-TW">漢語</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Traditional Chinese)</span>
-                    </button>
-                    <button class="btn fw wrap" value="ja">
-                        <span lang="ja">日本語</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Japanese)</span>
-                    </button>
-                    <button class="btn fw wrap" value="ko">
-                        <span lang="ko">한국어</span>
-                        <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span>(Korean)</span>
+                    <button class="lang-btn" value="th" data-label="Thai ภาษาไทย">
+                        <span class="lang-native" lang="th">ภาษาไทย</span>
+                        <span class="lang-english">Thai</span>
                     </button>
                 </div>
+                <div id="lang-no-results" style="display:none; padding:16px; text-align:center; color:rgba(233,216,255,0.4); font-size:13px;">No results</div>
                 <div class="center row-reverse btn-row wrap">
                     <button class="btn btn-rounded btn-grey" type="button" data-i18n-key="dialogs.close" data-i18n-attrs="text" close></button>
                 </div>
@@ -366,43 +337,40 @@
     <!-- Pair Device Dialog -->
     <x-dialog id="pair-device-dialog">
         <form action="#">
-            <x-background class="full center text-center">
-                <x-paper shadow="2">
-                    <div class="row center p-2">
-                        <h2 class="dialog-title" data-i18n-key="dialogs.pair-devices-title" data-i18n-attrs="text"></h2>
-                    </div>
-                    <div class="row center p-2">
-                        <div class="column">
-                            <div class="center key-qr-code pointer" data-i18n-key="dialogs.pair-devices-qr-code" data-i18n-attrs="title"></div>
-                            <h1 class="center key" dir="ltr">000 000</h1>
-                            <p class="center text-center key-instructions">
-                                <span class="font-subheading" data-i18n-key="dialogs.input-key-on-this-device" data-i18n-attrs="text"></span>
-                                <span class="font-subheading" data-i18n-key="dialogs.scan-qr-code" data-i18n-attrs="text"></span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="hr-note">
-                        <hr>
-                        <div>
-                            <span data-i18n-key="dialogs.hr-or" data-i18n-attrs="text"></span>
-                        </div>
-                    </div>
-                    <div class="row center p-2">
-                        <div class="column fw">
-                            <div class="input-key-container six-chars" dir="ltr">
-                                <input type="tel" class="textarea center" aria-label="pair-key-char-1" maxlength="1" autocorrect="off" autocomplete="off" autocapitalize="none" spellcheck="false" autofocus contenteditable placeholder disabled>
-                                <input type="tel" class="textarea center" aria-label="pair-key-char-2" maxlength="1" autocorrect="off" autocomplete="off" autocapitalize="none" spellcheck="false" contenteditable placeholder disabled>
-                                <input type="tel" class="textarea center" aria-label="pair-key-char-3" maxlength="1" autocorrect="off" autocomplete="off" autocapitalize="none" spellcheck="false" contenteditable placeholder disabled>
-                                <input type="tel" class="textarea center" aria-label="pair-key-char-4" maxlength="1" autocorrect="off" autocomplete="off" autocapitalize="none" spellcheck="false" contenteditable placeholder disabled>
-                                <input type="tel" class="textarea center" aria-label="pair-key-char-5" maxlength="1" autocorrect="off" autocomplete="off" autocapitalize="none" spellcheck="false" contenteditable placeholder disabled>
-                                <input type="tel" class="textarea center" aria-label="pair-key-char-6" maxlength="1" autocorrect="off" autocomplete="off" autocapitalize="none" spellcheck="false" contenteditable placeholder disabled>
+            <x-background class="full center">
+                <x-paper shadow="2" class="dlg-v2">
+                    <button class="dlg-v2-close" type="button" close aria-label="Close">
+                        <svg viewBox="0 0 24 24" fill="none" width="18" height="18"><path d="M18 6 6 18M6 6l12 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+                    </button>
+                    <div class="dlg-v2-split">
+                        <div class="dlg-v2-left">
+                            <div class="dlg-v2-badge">
+                                <svg viewBox="0 0 24 24" fill="none" width="26" height="26">
+                                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
                             </div>
-                            <p class="font-subheading center text-center" data-i18n-key="dialogs.enter-key-from-another-device" data-i18n-attrs="text"></p>
+                            <div class="key-qr-code pointer" data-i18n-key="dialogs.pair-devices-qr-code" data-i18n-attrs="title"></div>
+                            <h1 class="key" dir="ltr">000 000</h1>
                         </div>
-                    </div>
-                    <div class="btn-row row-reverse wrap">
-                        <button class="btn btn-rounded btn-grey" type="submit" data-i18n-key="dialogs.pair" data-i18n-attrs="text" disabled></button>
-                        <button class="btn btn-rounded btn-grey" type="button" data-i18n-key="dialogs.cancel" data-i18n-attrs="text" close></button>
+                        <div class="dlg-v2-right">
+                            <div class="dlg-v2-right-head">
+                                <h2 class="dlg-v2-title" data-i18n-key="dialogs.pair-devices-title" data-i18n-attrs="text"></h2>
+                                <p class="dlg-v2-sub" data-i18n-key="dialogs.scan-qr-code" data-i18n-attrs="text"></p>
+                            </div>
+                            <div class="dlg-v2-enter">
+                                <p class="dlg-v2-enter-label" data-i18n-key="dialogs.enter-key-from-another-device" data-i18n-attrs="text"></p>
+                                <div class="input-key-container six-chars" dir="ltr">
+                                    <input type="tel" class="textarea center" aria-label="pair-key-char-1" maxlength="1" autocorrect="off" autocomplete="off" autocapitalize="none" spellcheck="false" autofocus contenteditable placeholder disabled>
+                                    <input type="tel" class="textarea center" aria-label="pair-key-char-2" maxlength="1" autocorrect="off" autocomplete="off" autocapitalize="none" spellcheck="false" contenteditable placeholder disabled>
+                                    <input type="tel" class="textarea center" aria-label="pair-key-char-3" maxlength="1" autocorrect="off" autocomplete="off" autocapitalize="none" spellcheck="false" contenteditable placeholder disabled>
+                                    <input type="tel" class="textarea center" aria-label="pair-key-char-4" maxlength="1" autocorrect="off" autocomplete="off" autocapitalize="none" spellcheck="false" contenteditable placeholder disabled>
+                                    <input type="tel" class="textarea center" aria-label="pair-key-char-5" maxlength="1" autocorrect="off" autocomplete="off" autocapitalize="none" spellcheck="false" contenteditable placeholder disabled>
+                                    <input type="tel" class="textarea center" aria-label="pair-key-char-6" maxlength="1" autocorrect="off" autocomplete="off" autocapitalize="none" spellcheck="false" contenteditable placeholder disabled>
+                                </div>
+                                <button class="dlg-v2-submit" type="submit" data-i18n-key="dialogs.pair" data-i18n-attrs="text" disabled></button>
+                            </div>
+                        </div>
                     </div>
                 </x-paper>
             </x-background>
@@ -434,45 +402,43 @@
     <!-- Public Room Dialog -->
     <x-dialog id="public-room-dialog">
         <form action="#">
-            <x-background class="full center text-center">
-                <x-paper shadow="2">
-                    <div class="row center p-2">
-                        <h2 class="dialog-title" data-i18n-key="dialogs.temporary-public-room-title" data-i18n-attrs="text"></h2>
-                    </div>
-                    <div class="row center p-2">
-                        <div class="column">
-                            <div class="center key-qr-code pointer" data-i18n-key="dialogs.public-room-qr-code" data-i18n-attrs="title"></div>
-                            <h1 class="center key" dir="ltr"></h1>
-                            <p class="center text-center key-instructions">
-                                <span class="font-subheading" data-i18n-key="dialogs.input-room-id-on-another-device" data-i18n-attrs="text"></span>
-                                <span class="font-subheading" data-i18n-key="dialogs.scan-qr-code" data-i18n-attrs="text"></span>
-                            </p>
+            <x-background class="full center">
+                <x-paper shadow="2" class="dlg-v2">
+                    <button class="dlg-v2-close" type="button" close aria-label="Close">
+                        <svg viewBox="0 0 24 24" fill="none" width="18" height="18"><path d="M18 6 6 18M6 6l12 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+                    </button>
+                    <div class="dlg-v2-hero">
+                        <div class="dlg-v2-badge">
+                            <svg viewBox="0 0 24 24" fill="none" width="30" height="30">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="currentColor" stroke-width="2"/>
+                            </svg>
                         </div>
+                        <h2 class="dlg-v2-title" data-i18n-key="dialogs.temporary-public-room-title" data-i18n-attrs="text"></h2>
+                        <p class="dlg-v2-sub" data-i18n-key="dialogs.scan-qr-code" data-i18n-attrs="text"></p>
                     </div>
-                    <div class="hr-note">
-                        <hr>
-                        <div>
-                            <span data-i18n-key="dialogs.hr-or" data-i18n-attrs="text"></span>
-                        </div>
+                    <div class="dlg-v2-qr-wrap">
+                        <div class="key-qr-code pointer" data-i18n-key="dialogs.public-room-qr-code" data-i18n-attrs="title"></div>
                     </div>
-                    <div class="row center p-2">
-                        <div class="column fw">
-                            <div class="input-key-container" dir="ltr">
-                                <input type="text" class="textarea center" aria-label="room-id-char-1" maxlength="1" autocorrect="off" autocomplete="off" autocapitalize="none" spellcheck="false" autofocus contenteditable placeholder disabled>
-                                <input type="text" class="textarea center" aria-label="room-id-char-2" maxlength="1" autocorrect="off" autocomplete="off" autocapitalize="none" spellcheck="false" contenteditable placeholder disabled>
-                                <input type="text" class="textarea center" aria-label="room-id-char-3" maxlength="1" autocorrect="off" autocomplete="off" autocapitalize="none" spellcheck="false" contenteditable placeholder disabled>
-                                <input type="text" class="textarea center" aria-label="room-id-char-4" maxlength="1" autocorrect="off" autocomplete="off" autocapitalize="none" spellcheck="false" contenteditable placeholder disabled>
-                                <input type="text" class="textarea center" aria-label="room-id-char-5" maxlength="1" autocorrect="off" autocomplete="off" autocapitalize="none" spellcheck="false" contenteditable placeholder disabled>
-                            </div>
-                            <p class="font-subheading center text-center" data-i18n-key="dialogs.enter-room-id-from-another-device" data-i18n-attrs="text"></p>
-                        </div>
+                    <div class="dlg-v2-key-row">
+                        <h1 class="key" dir="ltr"></h1>
                     </div>
-                    <div class="center row-reverse btn-row wrap">
-                        <div class="row-reverse wrap grow-2">
-                            <button class="btn btn-rounded btn-grey" type="submit" data-i18n-key="dialogs.join" data-i18n-attrs="text" disabled></button>
-                            <button class="btn btn-rounded btn-grey leave-room" type="button" data-i18n-key="dialogs.leave" data-i18n-attrs="text"></button>
+                    <div class="dlg-v2-sep">
+                        <span data-i18n-key="dialogs.hr-or" data-i18n-attrs="text"></span>
+                    </div>
+                    <div class="dlg-v2-enter">
+                        <p class="dlg-v2-enter-label" data-i18n-key="dialogs.enter-room-id-from-another-device" data-i18n-attrs="text"></p>
+                        <div class="input-key-container" dir="ltr">
+                            <input type="text" class="textarea center" aria-label="room-id-char-1" maxlength="1" autocorrect="off" autocomplete="off" autocapitalize="none" spellcheck="false" autofocus contenteditable placeholder disabled>
+                            <input type="text" class="textarea center" aria-label="room-id-char-2" maxlength="1" autocorrect="off" autocomplete="off" autocapitalize="none" spellcheck="false" contenteditable placeholder disabled>
+                            <input type="text" class="textarea center" aria-label="room-id-char-3" maxlength="1" autocorrect="off" autocomplete="off" autocapitalize="none" spellcheck="false" contenteditable placeholder disabled>
+                            <input type="text" class="textarea center" aria-label="room-id-char-4" maxlength="1" autocorrect="off" autocomplete="off" autocapitalize="none" spellcheck="false" contenteditable placeholder disabled>
+                            <input type="text" class="textarea center" aria-label="room-id-char-5" maxlength="1" autocorrect="off" autocomplete="off" autocapitalize="none" spellcheck="false" contenteditable placeholder disabled>
                         </div>
-                        <button class="btn btn-rounded btn-grey" type="button" data-i18n-key="dialogs.close" data-i18n-attrs="text" close></button>
+                        <div class="dlg-v2-actions">
+                            <button class="dlg-v2-foot-btn danger leave-room" type="button" data-i18n-key="dialogs.leave" data-i18n-attrs="text"></button>
+                            <button class="dlg-v2-submit" type="submit" data-i18n-key="dialogs.join" data-i18n-attrs="text" disabled></button>
+                        </div>
                     </div>
                 </x-paper>
             </x-background>
@@ -485,25 +451,33 @@
                 <div class="row center p-2">
                     <h2 class="dialog-title"></h2>
                 </div>
-                <div class="row center p-2">
-                    <div class="column center file-description">
-                        <div>
+                <div class="transfer-request-body">
+                    <div class="transfer-peer-row">
+                        <div class="transfer-avatar">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+                        </div>
+                        <div class="transfer-info">
                             <span class="display-name badge"></span>
-                            <span data-i18n-key="dialogs.would-like-to-share" data-i18n-attrs="text"></span>
+                            <span class="transfer-action" data-i18n-key="dialogs.would-like-to-share" data-i18n-attrs="text"></span>
                         </div>
-                        <div class="row file-name">
-                            <span class="file-stem"></span>
-                            <span class="file-extension"></span>
-                        </div>
-                        <div class="row file-other">
-                        </div>
-                        <div class="row font-body2 file-size"></div>
                     </div>
+                    <div class="transfer-file-card">
+                        <div class="transfer-file-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>
+                        </div>
+                        <div class="transfer-file-meta">
+                            <div class="transfer-file-name">
+                                <span class="file-stem"></span><span class="file-extension"></span>
+                            </div>
+                            <div class="transfer-file-other row file-other"></div>
+                            <div class="transfer-file-size font-body2 file-size"></div>
+                        </div>
+                    </div>
+                    <div class="center file-preview"></div>
                 </div>
-                <div class="center file-preview"></div>
-                <div class="row-reverse center btn-row wrap">
-                    <button id="accept-request" class="btn btn-rounded btn-grey" title="ENTER" data-i18n-key="dialogs.accept" data-i18n-attrs="text" autofocus disabled></button>
-                    <button id="decline-request" class="btn btn-rounded btn-grey" title="ESCAPE" data-i18n-key="dialogs.decline" data-i18n-attrs="text"></button>
+                <div class="center btn-row wrap">
+                    <button id="decline-request" class="btn btn-rounded btn-danger" title="ESCAPE" data-i18n-key="dialogs.decline" data-i18n-attrs="text"></button>
+                    <button id="accept-request" class="btn btn-rounded btn-accept" title="ENTER" data-i18n-key="dialogs.accept" data-i18n-attrs="text" autofocus disabled></button>
                 </div>
             </x-paper>
         </x-background>
@@ -515,26 +489,34 @@
                 <div class="row center p-2">
                     <h2 class="dialog-title"></h2>
                 </div>
-                <div class="row center p-2">
-                    <div class="column center file-description">
-                        <div>
+                <div class="transfer-request-body">
+                    <div class="transfer-peer-row">
+                        <div class="transfer-avatar transfer-avatar-sent">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                        </div>
+                        <div class="transfer-info">
                             <span class="display-name badge"></span>
-                            <span data-i18n-key="dialogs.has-sent" data-i18n-attrs="text"></span>
+                            <span class="transfer-action" data-i18n-key="dialogs.has-sent" data-i18n-attrs="text"></span>
                         </div>
-                        <div class="row file-name">
-                            <span class="file-stem"></span>
-                            <span class="file-extension"></span>
-                        </div>
-                        <div class="row file-other">
-                        </div>
-                        <div class="row font-body2 file-size"></div>
                     </div>
+                    <div class="transfer-file-card">
+                        <div class="transfer-file-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>
+                        </div>
+                        <div class="transfer-file-meta">
+                            <div class="transfer-file-name">
+                                <span class="file-stem"></span><span class="file-extension"></span>
+                            </div>
+                            <div class="transfer-file-other row file-other"></div>
+                            <div class="transfer-file-size font-body2 file-size"></div>
+                        </div>
+                    </div>
+                    <div class="center file-preview"></div>
                 </div>
-                <div class="center file-preview"></div>
-                <div class="row-reverse center btn-row wrap">
-                    <button id="share-btn" class="btn btn-rounded btn-grey" data-i18n-key="dialogs.share" data-i18n-attrs="text" hidden></button>
-                    <button id="download-btn" class="btn btn-rounded btn-grey" data-i18n-key="dialogs.download" data-i18n-attrs="text" autofocus disabled></button>
+                <div class="center btn-row wrap">
                     <button class="btn btn-rounded btn-grey" data-i18n-key="dialogs.close" data-i18n-attrs="text" close></button>
+                    <button id="share-btn" class="btn btn-rounded btn-accept" data-i18n-key="dialogs.share" data-i18n-attrs="text" hidden></button>
+                    <button id="download-btn" class="btn btn-rounded btn-accept" data-i18n-key="dialogs.download" data-i18n-attrs="text" autofocus disabled></button>
                 </div>
             </x-paper>
         </x-background>
@@ -667,22 +649,22 @@
                 <use xlink:href="#wifi-tethering"></use>
             </svg>
             <div class="title-wrapper" dir="ltr">
-                <h1>PairDrop</h1>
+                <h1>XimDrop</h1>
                 <div class="font-subheading">v1.11.2</div>
             </div>
             <div class="font-subheading" data-i18n-key="about.claim" data-i18n-attrs="text"></div>
             <div class="row">
-                <a class="icon-button" target="_blank" href="https://github.com/schlagmichdoch/pairdrop" rel="noreferrer" data-i18n-key="about.github" data-i18n-attrs="title">
+                <a class="icon-button" target="_blank" href="https://github.com/schlagmichdoch/ximdrop" rel="noreferrer" data-i18n-key="about.github" data-i18n-attrs="title">
                     <svg class="icon">
                         <use xlink:href="#github"></use>
                     </svg>
                 </a>
-                <a class="icon-button" id="donation-btn" target="_blank" href="https://www.buymeacoffee.com/pairdrop" rel="noreferrer" data-i18n-key="about.buy-me-a-coffee" data-i18n-attrs="title">
+                <a class="icon-button" id="donation-btn" target="_blank" href="https://www.buymeacoffee.com/ximdrop" rel="noreferrer" data-i18n-key="about.buy-me-a-coffee" data-i18n-attrs="title">
                     <svg class="icon">
                         <use xlink:href="#donation"></use>
                     </svg>
                 </a>
-                <a class="icon-button" id="x-twitter-btn" target="_blank" href="https://x.com/intent/tweet?text=https%3A%2F%2Fpairdrop.net%20by%20https%3A%2F%2Fgithub.com%2Fschlagmichdoch%2F&amp;" rel="noreferrer" data-i18n-key="about.tweet" data-i18n-attrs="title">
+                <a class="icon-button" id="x-twitter-btn" target="_blank" href="https://x.com/intent/tweet?text=https%3A%2F%2Fximdrop.net%20by%20https%3A%2F%2Fgithub.com%2Fschlagmichdoch%2F&amp;" rel="noreferrer" data-i18n-key="about.tweet" data-i18n-attrs="title">
                     <svg class="icon">
                         <use xlink:href="#x-twitter"></use>
                     </svg>
@@ -707,7 +689,7 @@
                         <use xlink:href="#privacypolicy"></use>
                     </svg>
                 </a>
-                <a class="icon-button" target="_blank" href="https://github.com/schlagmichdoch/pairdrop/blob/master/docs/faq.md" rel="noreferrer" data-i18n-key="about.faq" data-i18n-attrs="title">
+                <a class="icon-button" target="_blank" href="https://github.com/schlagmichdoch/ximdrop/blob/master/docs/faq.md" rel="noreferrer" data-i18n-key="about.faq" data-i18n-attrs="title">
                     <svg class="icon">
                         <use xlink:href="#help-outline"></use>
                     </svg>
@@ -723,13 +705,16 @@
             <path d="M12 11c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 2c0-3.31-2.69-6-6-6s-6 2.69-6 6c0 2.22 1.21 4.15 3 5.19l1-1.74c-1.19-.7-2-1.97-2-3.45 0-2.21 1.79-4 4-4s4 1.79 4 4c0 1.48-.81 2.75-2 3.45l1 1.74c1.79-1.04 3-2.97 3-5.19zM12 3C6.48 3 2 7.48 2 13c0 3.7 2.01 6.92 4.99 8.65l1-1.73C5.61 18.53 4 15.96 4 13c0-4.42 3.58-8 8-8s8 3.58 8 8c0 2.96-1.61 5.53-4 6.92l1 1.73c2.99-1.73 5-4.95 5-8.65 0-5.52-4.48-10-10-10z"></path>
         </symbol>
         <symbol id="desktop-mac" viewBox="0 0 24 24">
-            <path d="M21 2H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h7l-2 3v1h8v-1l-2-3h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 12H3V4h18v10z"></path>
+            <!-- laptop -->
+            <path d="M20 18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"></path>
         </symbol>
         <symbol id="phone-iphone" viewBox="0 0 24 24">
-            <path d="M15.5 1h-8C6.12 1 5 2.12 5 3.5v17C5 21.88 6.12 23 7.5 23h8c1.38 0 2.5-1.12 2.5-2.5v-17C18 2.12 16.88 1 15.5 1zm-4 21c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4.5-4H7V4h9v14z"></path>
+            <!-- modern android phone: notch top, dot home -->
+            <path d="M16 0H8C6.34 0 5 1.34 5 3v18c0 1.66 1.34 3 3 3h8c1.66 0 3-1.34 3-3V3c0-1.66-1.34-3-3-3zm-4 22.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5-4.5H7V4h10v14zm-3.5-12h-3V5h3v1z"></path>
         </symbol>
         <symbol id="tablet-mac" viewBox="0 0 24 24">
-            <path d="M18.5 0h-14C3.12 0 2 1.12 2 2.5v19C2 22.88 3.12 24 4.5 24h14c1.38 0 2.5-1.12 2.5-2.5v-19C21 1.12 19.88 0 18.5 0zm-7 23c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm7.5-4H4V3h15v16z"></path>
+            <!-- landscape tablet with side button -->
+            <path d="M1 6C1 4.9 1.9 4 3 4h18c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V6zm2 0v12h18V6H3zm15.5 5c-.83 0-1.5.67-1.5 1.5S17.67 14 18.5 14 20 13.33 20 12.5 19.33 11 18.5 11zM5 8h10v8H5V8z"></path>
         </symbol>
         <symbol id="info-outline" viewBox="0 0 24 24">
             <path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"></path>
@@ -834,11 +819,246 @@
         <source src="sounds/blop.mp3" type="audio/mpeg">
         <source src="sounds/blop.ogg" type="audio/ogg">
     </audio>
+    <!-- Dropdown menu logic -->
+    <script>
+    (function() {
+        var btn      = document.getElementById('menu-btn');
+        var dropdown = document.getElementById('menu-dropdown');
+        if (!btn || !dropdown) return;
+
+        function positionDropdown() {
+            var r = btn.getBoundingClientRect();
+            dropdown.style.top  = (r.bottom + 18) + 'px';
+            dropdown.style.right = (window.innerWidth - r.right) + 'px';
+        }
+
+        function openMenu() {
+            positionDropdown();
+            dropdown.setAttribute('aria-hidden', 'false');
+            btn.classList.add('open');
+        }
+        function closeMenu() {
+            dropdown.setAttribute('aria-hidden', 'true');
+            btn.classList.remove('open');
+        }
+
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            dropdown.getAttribute('aria-hidden') === 'false' ? closeMenu() : openMenu();
+        });
+        document.addEventListener('click', function(e) {
+            if (!dropdown.contains(e.target) && e.target !== btn) closeMenu();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeMenu();
+        });
+
+        function fire(id) {
+            closeMenu();
+            var el = document.getElementById(id);
+            if (el) { el.dispatchEvent(new MouseEvent('click', {bubbles:true})); }
+        }
+
+        document.getElementById('mi-about').addEventListener('click', function() {
+            closeMenu();
+            window.open('https://github.com/ximxal', '_blank', 'noopener,noreferrer');
+        });
+        document.getElementById('mi-lang').addEventListener('click',        function() { fire('language-selector'); });
+        document.getElementById('mi-theme-auto').addEventListener('click',  function() { fire('theme-auto');  setTimeout(syncThemeChecks,80); });
+        document.getElementById('mi-theme-light').addEventListener('click', function() { fire('theme-light'); setTimeout(syncThemeChecks,80); });
+        document.getElementById('mi-theme-dark').addEventListener('click',  function() { fire('theme-dark');  setTimeout(syncThemeChecks,80); });
+        document.getElementById('mi-pair').addEventListener('click',        function() { fire('pair-device'); });
+        document.getElementById('mi-edit-pairs').addEventListener('click',  function() { fire('edit-paired-devices'); });
+        document.getElementById('mi-public-room').addEventListener('click', function() { fire('join-public-room'); });
+        document.getElementById('mi-install').addEventListener('click',     function() { fire('install'); });
+        document.getElementById('mi-notif').addEventListener('click',       function() { fire('notification'); });
+        document.getElementById('mi-donate').addEventListener('click', function() {
+            closeMenu();
+            var overlay = document.getElementById('donate-overlay');
+            if (overlay) { overlay.setAttribute('aria-hidden', 'false'); }
+        });
+        document.getElementById('donate-close').addEventListener('click', function() {
+            document.getElementById('donate-overlay').setAttribute('aria-hidden', 'true');
+        });
+        document.getElementById('donate-overlay').addEventListener('click', function(e) {
+            if (e.target === this) this.setAttribute('aria-hidden', 'true');
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                var overlay = document.getElementById('donate-overlay');
+                if (overlay && overlay.getAttribute('aria-hidden') === 'false') {
+                    overlay.setAttribute('aria-hidden', 'true');
+                }
+            }
+        });
+
+        function syncThemeChecks() {
+            ['auto','light','dark'].forEach(function(t) {
+                var orig = document.getElementById('theme-' + t);
+                var chk  = document.getElementById('check-' + t);
+                if (orig && chk) chk.classList.toggle('visible', orig.classList.contains('selected'));
+            });
+        }
+
+        function syncConditional() {
+            [['install','mi-install'],['notification','mi-notif'],['edit-paired-devices','mi-edit-pairs']].forEach(function(p) {
+                var src  = document.getElementById(p[0]);
+                var item = document.getElementById(p[1]);
+                if (src && item) item.style.display = src.hasAttribute('hidden') ? 'none' : '';
+            });
+        }
+
+        new MutationObserver(syncConditional).observe(document.body, {attributes:true, subtree:true, attributeFilter:['hidden']});
+        new MutationObserver(syncThemeChecks).observe(document.body, {attributes:true, subtree:true, attributeFilter:['class']});
+
+        syncThemeChecks();
+        syncConditional();
+
+        // Connection status dot
+        var connDot = document.getElementById('conn-status');
+        if (connDot) {
+            window.addEventListener('ws-connected',    function() { connDot.className = 'conn-dot connected'; });
+            window.addEventListener('ws-disconnected', function() { connDot.className = 'conn-dot disconnected'; });
+        }
+    })();
+    </script>
+    <script>
+    (function() {
+        var search = document.getElementById('lang-search');
+        var noResults = document.getElementById('lang-no-results');
+        if (!search) return;
+        search.addEventListener('input', function() {
+            var q = search.value.trim().toLowerCase();
+            var btns = document.querySelectorAll('.lang-btn');
+            var visible = 0;
+            btns.forEach(function(btn) {
+                var label = (btn.getAttribute('data-label') || '').toLowerCase();
+                var show = !q || label.indexOf(q) !== -1;
+                btn.style.display = show ? '' : 'none';
+                if (show) visible++;
+            });
+            if (noResults) noResults.style.display = visible === 0 ? 'block' : 'none';
+        });
+        // clear search when dialog closes
+        document.addEventListener('dialog-closed', function() {
+            search.value = '';
+            search.dispatchEvent(new Event('input'));
+        });
+    })();
+    </script>
+    <script>
+    (function() {
+        var nameEl  = document.getElementById('display-name');
+        var nameBox = document.getElementById('name-suggestions');
+        if (!nameEl || !nameBox) return;
+
+        var HISTORY_KEY = 'display_name_history';
+        function getHistory() {
+            try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); } catch(e) { return []; }
+        }
+        function pushHistory(name) {
+            if (!name) return;
+            var h = getHistory().filter(function(n) { return n !== name; });
+            h.unshift(name);
+            if (h.length > 8) h = h.slice(0, 8);
+            localStorage.setItem(HISTORY_KEY, JSON.stringify(h));
+        }
+
+        function renderSuggestions(q) {
+            var h = getHistory();
+            var matches = q
+                ? h.filter(function(n) { return n.toLowerCase().startsWith(q.toLowerCase()) && n !== q; })
+                : h.slice(0, 4);
+            nameBox.innerHTML = '';
+            if (!matches.length) { nameBox.hidden = true; return; }
+            matches.slice(0, 4).forEach(function(name) {
+                var chip = document.createElement('button');
+                chip.className = 'name-chip';
+                chip.textContent = name;
+                chip.addEventListener('mousedown', function(e) {
+                    e.preventDefault();
+                    nameEl.textContent = name;
+                    nameEl.blur();
+                    nameBox.hidden = true;
+                });
+                nameBox.appendChild(chip);
+            });
+            nameBox.hidden = false;
+        }
+
+        nameEl.addEventListener('focus', function() {
+            renderSuggestions(nameEl.textContent.trim());
+        });
+        nameEl.addEventListener('input', function() {
+            renderSuggestions(nameEl.textContent.trim());
+        });
+        nameEl.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab' && !nameBox.hidden) {
+                var first = nameBox.querySelector('.name-chip');
+                if (first) {
+                    e.preventDefault();
+                    nameEl.textContent = first.textContent;
+                    nameEl.blur();
+                    nameBox.hidden = true;
+                }
+            }
+        });
+        nameEl.addEventListener('blur', function() {
+            setTimeout(function() { nameBox.hidden = true; }, 150);
+            var name = nameEl.textContent.trim();
+            if (name) pushHistory(name);
+        });
+    })();
+    </script>
+    <script>
+    (function() {
+        var searchBar  = document.getElementById('peer-search-bar');
+        var searchInput = document.getElementById('peer-search');
+        var clearBtn   = document.getElementById('peer-search-clear');
+        var xPeers     = document.querySelector('x-peers');
+        if (!searchBar || !searchInput || !xPeers) return;
+
+        function filterPeers() {
+            var q = searchInput.value.trim().toLowerCase();
+            clearBtn.hidden = !q;
+            var peers = xPeers.querySelectorAll('x-peer');
+            peers.forEach(function(peer) {
+                var name = (peer.querySelector('.name') || {}).textContent || '';
+                var dev  = (peer.querySelector('.device-name') || {}).textContent || '';
+                var match = !q || name.toLowerCase().indexOf(q) !== -1 || dev.toLowerCase().indexOf(q) !== -1;
+                peer.style.display = match ? '' : 'none';
+            });
+        }
+
+        function syncBar() {
+            var hasPeers = xPeers.querySelector('x-peer') !== null;
+            searchBar.hidden = !hasPeers;
+            if (!hasPeers) {
+                searchInput.value = '';
+                clearBtn.hidden = true;
+                filterPeers();
+            }
+        }
+
+        searchInput.addEventListener('input', filterPeers);
+
+        clearBtn.addEventListener('click', function() {
+            searchInput.value = '';
+            clearBtn.hidden = true;
+            filterPeers();
+            searchInput.focus();
+        });
+
+        var obs = new MutationObserver(function() { syncBar(); filterPeers(); });
+        obs.observe(xPeers, { childList: true });
+        syncBar();
+    })();
+    </script>
     <!-- no script -->
     <noscript>
         <x-noscript class="full center column">
             <h1>Enable JavaScript</h1>
-            <h3>PairDrop works only with JavaScript</h3>
+            <h3>XimDrop works only with JavaScript</h3>
         </x-noscript>
     </noscript>
 </body>

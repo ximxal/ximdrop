@@ -1,4 +1,4 @@
-class PairDrop {
+class XimDrop {
 
     constructor() {
         this.$headerNotificationBtn = $('notification');
@@ -238,4 +238,4 @@ class PairDrop {
     }
 }
 
-const pairDrop = new PairDrop();
+const ximDrop = new XimDrop();

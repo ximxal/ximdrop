@@ -4,7 +4,7 @@ import {fileURLToPath} from "url";
 import path, {dirname} from "path";
 import http from "http";
 
-export default class PairDropServer {
+export default class XimDropServer {
 
     constructor(conf) {
         const app = express();

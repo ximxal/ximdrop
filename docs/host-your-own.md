@@ -7,18 +7,18 @@ Beware that you have to host your own TURN server to enable transfers between di
 Follow [this guide](https://gabrieltanner.org/blog/turn-server/) to either install coturn directly on your system (Step 1) 
 or deploy it via Docker (Step 5).
 
-You can use the `docker-compose-coturn.yml` in this repository. See [Coturn and PairDrop via Docker Compose](#coturn-and-pairdrop-via-docker-compose).
+You can use the `docker-compose-coturn.yml` in this repository. See [Coturn and XimDrop via Docker Compose](#coturn-and-ximdrop-via-docker-compose).
  
 Alternatively, use a free, pre-configured TURN server like [OpenRelay](https://www.metered.ca/tools/openrelay/)
 
 <br>
 
-## PairDrop via HTTPS
+## XimDrop via HTTPS
 
-On some browsers PairDrop must be served over TLS in order for some features to work properly.
+On some browsers XimDrop must be served over TLS in order for some features to work properly.
 These may include:
 - Copying an incoming message via the 'copy' button
-- Installing PairDrop as PWA
+- Installing XimDrop as PWA
 - Persistent pairing of devices
 - Changing of the display name
 - Notifications
@@ -29,14 +29,14 @@ Naturally, this is also recommended to increase security.
 
 ## Deployment with Docker
 
-The easiest way to get PairDrop up and running is by using Docker.
+The easiest way to get XimDrop up and running is by using Docker.
 
 ### Docker Image from Docker Hub
 
 ```bash
-docker run -d --restart=unless-stopped --name=pairdrop -p 127.0.0.1:3000:3000 lscr.io/linuxserver/pairdrop
+docker run -d --restart=unless-stopped --name=ximdrop -p 127.0.0.1:3000:3000 lscr.io/linuxserver/ximdrop
 ```
-> This image is hosted by [linuxserver.io](https://linuxserver.io). For more information visit https://hub.docker.com/r/linuxserver/pairdrop
+> This image is hosted by [linuxserver.io](https://linuxserver.io). For more information visit https://hub.docker.com/r/linuxserver/ximdrop
 
 
 <br>
@@ -44,7 +44,7 @@ docker run -d --restart=unless-stopped --name=pairdrop -p 127.0.0.1:3000:3000 ls
 ### Docker Image from GitHub Container Registry (ghcr.io)
 
 ```bash
-docker run -d --restart=unless-stopped --name=pairdrop -p 127.0.0.1:3000:3000 ghcr.io/schlagmichdoch/pairdrop
+docker run -d --restart=unless-stopped --name=ximdrop -p 127.0.0.1:3000:3000 ghcr.io/schlagmichdoch/ximdrop
 ```
 
 
@@ -55,7 +55,7 @@ docker run -d --restart=unless-stopped --name=pairdrop -p 127.0.0.1:3000:3000 gh
 #### Build the image
 
 ```bash
-docker build --pull . -f Dockerfile -t pairdrop
+docker build --pull . -f Dockerfile -t ximdrop
 ```
 
 > A GitHub action is set up to do this step automatically at the release of new versions.
@@ -65,7 +65,7 @@ docker build --pull . -f Dockerfile -t pairdrop
 #### Run the image
 
 ```bash
-docker run -d --restart=unless-stopped --name=pairdrop -p 127.0.0.1:3000:3000 -it pairdrop
+docker run -d --restart=unless-stopped --name=ximdrop -p 127.0.0.1:3000:3000 -it ximdrop
 ```
 
 > You must use a server proxy to set the `X-Forwarded-For` header 
@@ -95,14 +95,14 @@ Set options by using the following flags in the `docker run` command:
 #### Set Environment Variables via Docker
 
 Environment Variables are set directly in the `docker run` command: \
-e.g. `docker run -p 127.0.0.1:3000:3000 -it pairdrop -e DEBUG_MODE="true"`
+e.g. `docker run -p 127.0.0.1:3000:3000 -it ximdrop -e DEBUG_MODE="true"`
 
 Overview of available Environment Variables are found [here](#environment-variables).
 
 Example:
 ```bash
 docker run -d \
-    --name=pairdrop \
+    --name=ximdrop \
     --restart=unless-stopped \
     -p 127.0.0.1:3000:3000 \
     -e PUID=1000 \
@@ -113,7 +113,7 @@ docker run -d \
     -e RATE_LIMIT=false \
     -e DEBUG_MODE=false \
     -e TZ=Etc/UTC \
-    lscr.io/linuxserver/pairdrop 
+    lscr.io/linuxserver/ximdrop 
 ```
 
 <br>
@@ -125,9 +125,9 @@ Here's an example docker compose file:
 ```yaml
 version: "3"
 services:
-    pairdrop:
-        image: "lscr.io/linuxserver/pairdrop:latest"
-        container_name: pairdrop
+    ximdrop:
+        image: "lscr.io/linuxserver/ximdrop:latest"
+        container_name: ximdrop
         restart: unless-stopped
         environment:
             - PUID=1000 # UID to run the application as
@@ -156,7 +156,7 @@ Run the compose file with `docker compose up -d`.
 Clone this repository and enter the folder
 
 ```bash
-git clone https://github.com/schlagmichdoch/PairDrop.git && cd PairDrop
+git clone https://github.com/schlagmichdoch/XimDrop.git && cd XimDrop
 ```
 
 Install all dependencies with NPM:
@@ -202,7 +202,7 @@ npm start -- --localhost-only
 > You must use a server proxy to set the `X-Forwarded-For` header 
 > to prevent all clients from discovering each other (See [#HTTP-Server](#http-server)).
 >
-> Use this when deploying PairDrop with node to prevent 
+> Use this when deploying XimDrop with node to prevent 
 > bypassing the reverse proxy by reaching the Node.js server directly.
 
 #### Automatic restart on error
@@ -269,20 +269,20 @@ DEBUG_MODE="true"
 > is configured correctly, so the auto-discovery feature works correctly.
 > Otherwise, all clients discover each other mutually, independently of their network status.
 >
-> If this flag is set to `"true"` each peer that connects to the PairDrop server will produce a log to STDOUT like this:
+> If this flag is set to `"true"` each peer that connects to the XimDrop server will produce a log to STDOUT like this:
 >
 > ```
 > ----DEBUGGING-PEER-IP-START----
 > remoteAddress: ::ffff:172.17.0.1
 > x-forwarded-for: 19.117.63.126
 > cf-connecting-ip: undefined
-> PairDrop uses: 19.117.63.126
+> XimDrop uses: 19.117.63.126
 > IP is private: false
 > if IP is private, '127.0.0.1' is used instead
 > ----DEBUGGING-PEER-IP-END----
 > ```
 >
-> If the IP address "PairDrop uses" matches the public IP address of the client device, everything is set up correctly. \
+> If the IP address "XimDrop uses" matches the public IP address of the client device, everything is set up correctly. \
 > To find out the public IP address of the client device visit https://whatsmyip.com/.
 >
 > To preserve your clients' privacy: \
@@ -309,8 +309,8 @@ RATE_LIMIT=1
 >
 > To find the correct number to use for this setting:
 >
-> 1. Start PairDrop with `DEBUG_MODE=True` and `RATE_LIMIT=1`
-> 2. Make a `get` request to `/ip` of the PairDrop instance (e.g. `https://pairdrop-example.net/ip`)
+> 1. Start XimDrop with `DEBUG_MODE=True` and `RATE_LIMIT=1`
+> 2. Make a `get` request to `/ip` of the XimDrop instance (e.g. `https://ximdrop-example.net/ip`)
 > 3. Check if the IP address returned in the response matches your public IP address (find out by visiting e.g. https://whatsmyip.com/)
 > 4. You have found the correct number if the IP addresses match. If not, then increase `RATE_LIMIT` by one and redo 1. - 4.
 >
@@ -347,10 +347,10 @@ WS_FALLBACK=true
 
 > Default: `false`
 >
-> Provides PairDrop to clients with an included websocket fallback \
+> Provides XimDrop to clients with an included websocket fallback \
 > if the peer to peer WebRTC connection is not available to the client.
 >
-> This is not used on the official https://pairdrop.net website, 
+> This is not used on the official https://ximdrop.net website, 
 > but you can activate it on your self-hosted instance.\
 > This is especially useful if you connect to your instance via a VPN (as most VPN services block WebRTC completely in 
 > order to hide your real IP address). ([Read more here](https://privacysavvy.com/security/safe-browsing/disable-webrtc-chrome-firefox-safari-opera-edge/)).
@@ -375,7 +375,7 @@ RTC_CONFIG="rtc_config.json"
 
 > Default: `false`
 >
-> Specify the STUN/TURN servers PairDrop clients use by setting \
+> Specify the STUN/TURN servers XimDrop clients use by setting \
 > `RTC_CONFIG` to a JSON file including the configuration. \
 > You can use `rtc_config_example.json` as a starting point.
 >
@@ -398,12 +398,12 @@ RTC_CONFIG="rtc_config.json"
 <br>
 
 You can host an instance that uses another signaling server
-This can be useful if you don't want to trust the client files that are hosted on another instance but still want to connect to devices that use https://pairdrop.net.
+This can be useful if you don't want to trust the client files that are hosted on another instance but still want to connect to devices that use https://ximdrop.net.
 
 ### Specify Signaling Server
 
 ```bash
-SIGNALING_SERVER="pairdrop.net"
+SIGNALING_SERVER="ximdrop.net"
 ```
 
 > Default: `false`
@@ -412,22 +412,22 @@ SIGNALING_SERVER="pairdrop.net"
 > 
 > By using `SIGNALING_SERVER`, you can host an instance that uses another signaling server.
 > 
-> This can be useful if you want to ensure the integrity of the client files and don't want to trust the client files that are hosted on another PairDrop instance but still want to connect to devices that use the other instance.
-> E.g. host your own client files under *pairdrop.your-domain.com* but use the official signaling server under *pairdrop.net*
-> This way devices connecting to *pairdrop.your-domain.com* and *pairdrop.net* can discover each other.
+> This can be useful if you want to ensure the integrity of the client files and don't want to trust the client files that are hosted on another XimDrop instance but still want to connect to devices that use the other instance.
+> E.g. host your own client files under *ximdrop.your-domain.com* but use the official signaling server under *ximdrop.net*
+> This way devices connecting to *ximdrop.your-domain.com* and *ximdrop.net* can discover each other.
 > 
-> Beware that the version of your PairDrop server must be compatible with the version of the signaling server.
+> Beware that the version of your XimDrop server must be compatible with the version of the signaling server.
 >
 > `SIGNALING_SERVER` must be a valid url without the protocol prefix. 
-> Examples of valid values: `pairdrop.net`, `pairdrop.your-domain.com:3000`, `your-domain.com/pairdrop`
+> Examples of valid values: `ximdrop.net`, `ximdrop.your-domain.com:3000`, `your-domain.com/ximdrop`
 
 <br>
 
-### Customizable buttons for the _About PairDrop_ page
+### Customizable buttons for the _About XimDrop_ page
 
 ```bash
 DONATION_BUTTON_ACTIVE=true
-DONATION_BUTTON_LINK="https://www.buymeacoffee.com/pairdrop"
+DONATION_BUTTON_LINK="https://www.buymeacoffee.com/ximdrop"
 DONATION_BUTTON_TITLE="Buy me a coffee"
 TWITTER_BUTTON_ACTIVE=true
 TWITTER_BUTTON_LINK="https://twitter.com/account"
@@ -470,7 +470,7 @@ PRIVACYPOLICY_BUTTON_TITLE="Open our privacy policy"
 
 ## HTTP-Server
 
-When running PairDrop, the `X-Forwarded-For` header has to be set by a proxy. \
+When running XimDrop, the `X-Forwarded-For` header has to be set by a proxy. \
 Otherwise, all clients will be mutually visible.
 
 To check if your setup is configured correctly [use the environment variable `DEBUG_MODE="true"`](#debug-mode).
@@ -496,8 +496,8 @@ server {
 
 server {
     listen       443 ssl http2;
-    ssl_certificate /etc/ssl/certs/pairdrop-dev.crt;
-    ssl_certificate_key /etc/ssl/certs/pairdrop-dev.key;
+    ssl_certificate /etc/ssl/certs/ximdrop-dev.crt;
+    ssl_certificate_key /etc/ssl/certs/ximdrop-dev.key;
 
     expires epoch;
 
@@ -526,8 +526,8 @@ server {
 
 server {
     listen       443 ssl http2;
-    ssl_certificate /etc/ssl/certs/pairdrop-dev.crt;
-    ssl_certificate_key /etc/ssl/certs/pairdrop-dev.key;
+    ssl_certificate /etc/ssl/certs/ximdrop-dev.crt;
+    ssl_certificate_key /etc/ssl/certs/ximdrop-dev.key;
 
     expires epoch;
 
@@ -560,7 +560,7 @@ a2enmod proxy_http
 
 Create a new configuration file under `/etc/apache2/sites-available` (on Debian)
 
-**pairdrop.conf**
+**ximdrop.conf**
 
 #### Allow HTTP and HTTPS requests
 
@@ -587,7 +587,7 @@ Create a new configuration file under `/etc/apache2/sites-available` (on Debian)
 Activate the new virtual host and reload Apache:
 
 ```bash
-a2ensite pairdrop
+a2ensite ximdrop
 ```
 
 ```bash
@@ -596,10 +596,10 @@ service apache2 reload
 
 <br>
 
-## Coturn and PairDrop via Docker Compose
+## Coturn and XimDrop via Docker Compose
 
 ### Setup container
-To run coturn and PairDrop at once by using the `docker-compose-coturn.yml` with TURN over TLS enabled
+To run coturn and XimDrop at once by using the `docker-compose-coturn.yml` with TURN over TLS enabled
 you need to follow these steps:
 
 1. Generate or retrieve certificates for your `<DOMAIN>` (e.g. letsencrypt / certbot)
@@ -609,7 +609,7 @@ you need to follow these steps:
 5. Create a dh-params file: `openssl dhparam -out ./ssl/dhparams.pem 4096` 
 6. Copy `rtc_config_example.json` to `rtc_config.json`
 7. Copy `turnserver_example.conf` to `turnserver.conf`
-8. Change `<DOMAIN>` in both files to the domain where your PairDrop instance is running 
+8. Change `<DOMAIN>` in both files to the domain where your XimDrop instance is running 
 9. Change `username` and `password` in `turnserver.conf` and `rtc-config.json`
 10. To start the container including coturn run: \
   `docker compose -f docker-compose-coturn.yml up -d`
@@ -629,7 +629,7 @@ To stop the container including coturn run: \
 <br>
 
 ### Firewall
-To run PairDrop including its own coturn-server you need to punch holes in the firewall. These ports must be opened additionally:
+To run XimDrop including its own coturn-server you need to punch holes in the firewall. These ports must be opened additionally:
 - 3478 tcp/udp
 - 5349 tcp/udp
 - 10000:20000 tcp/udp
@@ -650,7 +650,7 @@ First, [Install docker with docker compose.](https://docs.docker.com/compose/ins
 Then, clone the repository and run docker compose:
 
 ```bash
-git clone https://github.com/schlagmichdoch/PairDrop.git && cd PairDrop
+git clone https://github.com/schlagmichdoch/XimDrop.git && cd XimDrop
 ```
 ```bash
 docker compose -f docker-compose-dev.yml up --no-deps --build
@@ -658,7 +658,7 @@ docker compose -f docker-compose-dev.yml up --no-deps --build
 
 Now point your web browser to `http://localhost:8080`.
 
-- To debug the Node.js server, run `docker logs pairdrop`.
+- To debug the Node.js server, run `docker logs ximdrop`.
 - After changes to the code you have to rerun the `docker compose` command
 
 <br>
@@ -699,7 +699,7 @@ Alternatively:
 
 ##### Google Chrome
 - To skip the installation of the certificate, you can also open `chrome://flags/#unsafely-treat-insecure-origin-as-secure`
-- The feature `Insecure origins treated as secure` must be enabled and the list must include your PairDrop test instance. E.g.: `http://127.0.0.1:3000,https://127.0.0.1:8443`
+- The feature `Insecure origins treated as secure` must be enabled and the list must include your XimDrop test instance. E.g.: `http://127.0.0.1:3000,https://127.0.0.1:8443`
 
 Please note that the certificates (CA and webserver cert) expire after a day.
 Also, whenever you restart the NGINX Docker container new certificates are created.

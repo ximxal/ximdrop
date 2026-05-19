@@ -1,8 +1,8 @@
 import {spawn} from "child_process";
 import fs from "fs";
 
-import PairDropServer from "./server.js";
-import PairDropWsServer from "./ws-server.js";
+import XimDropServer from "./server.js";
+import XimDropWsServer from "./ws-server.js";
 
 // Handle SIGINT
 process.on('SIGINT', () => {
@@ -126,7 +126,7 @@ if (conf.signalingServer) {
     const endsWithSlash = /\/$/.test(conf.signalingServer)
     if (!isValidUrl || containsProtocol) {
         console.error("SIGNALING_SERVER must be a valid url without the protocol prefix.\n" +
-            "Examples of valid values: `pairdrop.net`, `pairdrop.example.com:3000`, `example.com/pairdrop`");
+            "Examples of valid values: `ximdrop.net`, `ximdrop.example.com:3000`, `example.com/ximdrop`");
         process.exit(1);
     }
 
@@ -151,7 +151,7 @@ if (conf.debugMode) {
     console.debug("\n");
 }
 
-// Start a new PairDrop instance when an uncaught exception occurs
+// Start a new XimDrop instance when an uncaught exception occurs
 if (conf.autoStart) {
     process.on(
         'uncaughtException',
@@ -174,13 +174,13 @@ if (conf.autoStart) {
 }
 
 // Start server to serve client files
-const pairDropServer = new PairDropServer(conf);
+const ximDropServer = new XimDropServer(conf);
 
 if (!conf.signalingServer) {
     // Start websocket server if SIGNALING_SERVER is not set
-    new PairDropWsServer(pairDropServer.server, conf);
+    new XimDropWsServer(ximDropServer.server, conf);
 } else {
     console.log("This instance does not include a signaling server. Clients on this instance connect to the following signaling server:", conf.signalingServer);
 }
 
-console.log('\nPairDrop is running on port', conf.port);
+console.log('\nXimDrop is running on port', conf.port);

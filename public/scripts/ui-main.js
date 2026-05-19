@@ -198,7 +198,7 @@ class FooterUI {
     constructor() {
         this.$footer = $$('footer');
         this.$displayName = $('display-name');
-        this.$discoveryWrapper = $$('footer .discovery-wrapper');
+        this.$discoveryWrapper = $$('.discovery-wrapper');
 
         this.$displayName.addEventListener('keydown', e => this._onKeyDownDisplayName(e));
         this.$displayName.addEventListener('focus', e => this._onFocusDisplayName(e));
@@ -244,6 +244,11 @@ class FooterUI {
 
         // set original display name as placeholder
         this.$displayName.setAttribute('placeholder', displayNameServer);
+
+        // auto-fill with server-generated name if user hasn't set one
+        if (!this.$displayName.textContent.trim()) {
+            this._insertDisplayName(displayNameServer);
+        }
     }
 
 

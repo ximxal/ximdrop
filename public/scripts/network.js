@@ -225,7 +225,7 @@ class ServerConnection {
         sessionStorage.setItem('peer_id', msg.peerId);
         sessionStorage.setItem('peer_id_hash', msg.peerIdHash);
 
-        // Add peerId to localStorage to mark it for other PairDrop tabs on the same browser
+        // Add peerId to localStorage to mark it for other XimDrop tabs on the same browser
         BrowserTabsConnector
             .addPeerIdToLocalStorage()
             .then(peerId => {
@@ -554,7 +554,32 @@ class Peer {
             case 'display-name-changed':
                 this._onDisplayNameChanged(messageJSON);
                 break;
+            case 'transfer-cancelled':
+                this._onTransferCancelledByPeer();
+                break;
         }
+    }
+
+    _onTransferCancelledByPeer() {
+        this._chunker = null;
+        this._digester = null;
+        this._busy = false;
+        this._filesQueue = [];
+        this._requestAccepted = null;
+        this._requestPending = null;
+        Events.fire('set-progress', {peerId: this._peerId, progress: 1, status: 'wait'});
+        Events.fire('notify-user', 'Transfer cancelled');
+    }
+
+    cancelTransfer() {
+        this.sendJSON({type: 'transfer-cancelled'});
+        this._chunker = null;
+        this._digester = null;
+        this._busy = false;
+        this._filesQueue = [];
+        this._requestAccepted = null;
+        this._requestPending = null;
+        Events.fire('set-progress', {peerId: this._peerId, progress: 1, status: 'wait'});
     }
 
     _onFilesTransferRequest(request) {
@@ -650,7 +675,7 @@ class Peer {
             this._abortTransfer();
         }
 
-        // include for compatibility with 'Snapdrop & PairDrop for Android' app
+        // include for compatibility with 'Snapdrop & XimDrop for Android' app
         Events.fire('file-received', fileBlob);
 
         this._filesReceived.push(fileBlob);
@@ -668,7 +693,7 @@ class Peer {
         if (!this._filesQueue.length) {
             this._busy = false;
             Events.fire('notify-user', Localization.getTranslation("notifications.file-transfer-completed"));
-            Events.fire('files-sent'); // used by 'Snapdrop & PairDrop for Android' app
+            Events.fire('files-sent'); // used by 'Snapdrop & XimDrop for Android' app
         }
         else {
             this._dequeueFile();
@@ -987,7 +1012,8 @@ class PeersManager {
         Events.on('signal', e => this._onMessage(e.detail));
         Events.on('peers', e => this._onPeers(e.detail));
         Events.on('files-selected', e => this._onFilesSelected(e.detail));
-        Events.on('respond-to-files-transfer-request', e => this._onRespondToFileTransferRequest(e.detail))
+        Events.on('respond-to-files-transfer-request', e => this._onRespondToFileTransferRequest(e.detail));
+        Events.on('cancel-transfer', e => this._onCancelTransfer(e.detail.peerId));
         Events.on('send-text', e => this._onSendText(e.detail));
         Events.on('peer-left', e => this._onPeerLeft(e.detail));
         Events.on('peer-joined', e => this._onPeerJoined(e.detail));
@@ -1081,6 +1107,11 @@ class PeersManager {
         this.peers[detail.to]._respondToFileTransferRequest(detail.accepted);
     }
 
+    _onCancelTransfer(peerId) {
+        const peer = this.peers[peerId];
+        if (peer) peer.cancelTransfer();
+    }
+
     async _onFilesSelected(message) {
         let files = mime.addMissingMimeTypesToFiles([...message.files]);
         await this.peers[message.to].requestFileTransfer(files);
@@ -1095,7 +1126,7 @@ class PeersManager {
             console.log('WSPeer left:', message.peerId);
         }
         if (message.disconnect === true) {
-            // if user actively disconnected from PairDrop server, disconnect all peer to peer connections immediately
+            // if user actively disconnected from XimDrop server, disconnect all peer to peer connections immediately
             this._disconnectOrRemoveRoomTypeByPeerId(message.peerId, message.roomType);
 
             // If no peers are connected anymore, we can safely assume that no other tab on the same browser is connected:
