@@ -1324,6 +1324,17 @@ x-dialog:not([show]) x-background { opacity: 0; pointer-events: none; }
 /* Edge */
 @supports (-ms-ime-align: auto) { html, body { overflow: hidden; } }
 
+#app-version {
+    position: fixed;
+    bottom: 8px;
+    right: 10px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.2);
+    pointer-events: none;
+    z-index: 9999;
+    font-family: monospace;
+}
+
 /* ---- Mobile: clean header + name below subtitle + menu bottom-left ---- */
 @media screen and (max-width: 600px) {
     /* Header: logo only */
