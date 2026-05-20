@@ -1324,50 +1324,26 @@ x-dialog:not([show]) x-background { opacity: 0; pointer-events: none; }
 /* Edge */
 @supports (-ms-ime-align: auto) { html, body { overflow: hidden; } }
 
-/* ---- Mobile header: 2-row layout so nothing overflows ---- */
+/* ---- Mobile header: logo + menu only, clean single row ---- */
 @media screen and (max-width: 600px) {
-    /* Dissolve #header-left so its children join the header flex directly */
-    #header-left { display: contents; }
-
     header {
-        flex-wrap: wrap;
-        align-items: center;
-        row-gap: 6px;
-        padding: 10px 14px;
-        column-gap: 0;
+        padding: 0 14px;
+        min-height: 56px;
+        flex-wrap: nowrap;
     }
 
-    /* Row 1: logo (grows) + conn-dot + menu button */
-    #brand-wordmark { order: 1; flex: 1 1 auto; }
-    #conn-status    { order: 1; margin: 0 6px; }
-    #header-right   { order: 1; }
+    /* Hide identity section — name/discovery not needed in header on mobile */
+    #header-identity { display: none !important; }
 
-    /* Row 2: identity full-width */
-    #header-identity {
-        order: 2;
-        flex: 0 0 100%;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding-bottom: 4px;
+    /* Hide conn dot — saves space */
+    #conn-status { display: none !important; }
+
+    #header-left {
+        flex-shrink: 1 !important;
+        gap: 0;
     }
 
-    /* Hide verbose labels */
-    .known-as-wrapper > span[data-i18n-key="footer.known-as"],
-    .discovery-wrapper > span[data-i18n-key="footer.discovery"] {
-        display: none !important;
-    }
-
-    #display-name     { max-width: 8em; }
-    .discovery-wrapper { padding: 3px 8px; gap: 3px; }
-    .known-as-wrapper  { gap: 4px; }
-}
-
-@media screen and (max-width: 400px) {
-    #brand-wordmark    { font-size: 17px; }
-    #display-name      { max-width: 5em; font-size: 12px; }
-    .discovery-wrapper { font-size: 11px; }
+    #brand-wordmark { font-size: 19px; }
 }
 
 /* ---- Donate overlay ---- */
