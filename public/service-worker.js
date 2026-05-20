@@ -1,4 +1,4 @@
-const cacheVersion = 'v2.1.27';
+const cacheVersion = 'v2.1.28';
 const cacheTitle = `ximdrop-cache-${cacheVersion}`;
 const relativePathsToCache = [
     './',
@@ -168,24 +168,10 @@ self.addEventListener('fetch', function(event) {
         })());
     }
     else {
-        // Regular requests not related to Web Share Target:
-        // If request is excluded from cache -> respondWith fromNetwork
-        // else -> try fromCache first
+        // Network-first: always try server first, fall back to cache when offline
         event.respondWith(
-            doNotCacheRequest(event.request)
-                ? fromNetwork(event.request, 10000)
-                : fromCache(event.request)
-                    .then(rsp => {
-                        // if fromCache resolves to undefined fetch from network instead
-                        if (!rsp) {
-                            throw new Error("No match found.");
-                        }
-                        return rsp;
-                    })
-                    .catch(error => {
-                        console.error("Could not retrieve request from cache:", event.request.url, error);
-                        return fromNetwork(event.request, 10000);
-                    })
+            fromNetwork(event.request, 8000)
+                .catch(() => fromCache(event.request))
         );
     }
 });
