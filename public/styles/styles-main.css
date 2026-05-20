@@ -1337,29 +1337,34 @@ x-dialog:not([show]) x-background { opacity: 0; pointer-events: none; }
 
 /* ---- Mobile: clean header + name below subtitle + menu bottom-left ---- */
 @media screen and (max-width: 600px) {
-    /* Header: logo only */
+    /* Smaller peer cards */
+    :root { --peer-width: 108px; }
+
+    /* Header: logo only, compact */
     header {
-        padding: 0 16px;
-        min-height: 54px;
-        gap: 8px;
+        padding: 0 14px;
+        min-height: 48px;
+        gap: 6px;
         flex-wrap: nowrap;
     }
     #header-identity { display: none !important; }
     #conn-status     { display: none !important; }
     #header-left     { flex-shrink: 1 !important; gap: 0; }
 
+    #brand-wordmark { font-size: 17px; }
+
     /* Keep space where menu button was so logo stays left */
-    #header-right { width: 50px; visibility: hidden; }
+    #header-right { width: 44px; visibility: hidden; }
 
     /* ⋮ button fixed bottom-left */
     #menu-btn {
         position: fixed !important;
-        bottom: 28px;
-        left: 20px;
+        bottom: 20px;
+        left: 16px;
         z-index: 500;
-        width: 50px;
-        height: 50px;
-        border-radius: 16px;
+        width: 46px;
+        height: 46px;
+        border-radius: 14px;
         background: rgba(147,51,234,0.18) !important;
         border: 1px solid rgba(147,51,234,0.35) !important;
         backdrop-filter: blur(12px);
@@ -1367,21 +1372,56 @@ x-dialog:not([show]) x-background { opacity: 0; pointer-events: none; }
         visibility: visible;
     }
 
+    /* Select Files FAB — smaller, above menu button */
+    #select-files-btn {
+        bottom: 20px;
+        right: 14px;
+        padding: 10px 16px 10px 14px;
+        font-size: 12px;
+        gap: 7px;
+        border-radius: 40px;
+    }
+    #select-files-btn svg { width: 16px; height: 16px; }
+
+    /* No-peers empty state — compact */
+    x-no-peers {
+        padding: 24px 20px;
+        gap: 8px;
+    }
+    x-no-peers::before {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 4px;
+    }
+    x-no-peers h2 { font-size: 15px !important; }
+    x-no-peers > div { font-size: 12px; max-width: 210px; }
+
+    /* Smaller h1/h2 globally on mobile */
+    h1 { font-size: 26px; }
+    h2 { font-size: 16px; }
+
     /* Name row below subtitle */
     #mobile-name-row {
         display: flex;
         align-items: center;
         gap: 5px;
-        margin-top: 10px;
+        margin-top: 8px;
     }
 
     #mobile-display-name {
         font-weight: 700;
         color: var(--c-primary-lt);
-        font-size: 14px;
-        padding: 2px 10px;
+        font-size: 13px;
+        padding: 2px 8px;
         border-radius: 8px;
         background: rgba(147,51,234,0.12);
+    }
+
+    /* Peer search bar — full width on mobile */
+    #peer-search-bar {
+        width: calc(100vw - 28px);
+        margin-top: 14px;
+        margin-bottom: 4px;
     }
 }
 

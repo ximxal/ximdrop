@@ -1715,6 +1715,41 @@ x-paper.dlg-v2 { max-width: 520px; }
     }
 }
 
+/* ---- Mobile peer card overrides ---- */
+@media screen and (max-width: 600px) {
+    x-peer label {
+        padding: 14px 8px 12px;
+        border-radius: 16px;
+    }
+
+    x-peer x-icon { --icon-size: 36px; margin-bottom: 8px; }
+
+    x-peer .icon-wrapper {
+        width: calc(var(--icon-size) + 18px);
+        height: calc(var(--icon-size) + 18px);
+    }
+
+    x-peer .name        { font-size: 11px; }
+    x-peer .device-name { font-size: 10px; }
+    x-peer .status      { font-size: 10px; }
+
+    .highlight-wrapper { margin: 5px auto 0; }
+
+    /* Progress ring — scale to smaller icon */
+    .progress { width: 76px; height: 76px; clip: rect(0,76px,76px,38px); top: -4px; }
+    .circle   { width: 68px; height: 68px; clip: rect(0,38px,76px,0); }
+    .over50 .circle.right { transform: rotate(180deg); }
+
+    /* Spinner rings re-center on smaller icon-wrapper */
+    x-peer[status="wait"] .icon-wrapper::before,
+    x-peer[status="prepare"] .icon-wrapper::before { inset: -6px; }
+    x-peer[status="wait"] .icon-wrapper::after,
+    x-peer[status="prepare"] .icon-wrapper::after  { inset: -11px; }
+
+    /* Language grid — 2 columns on mobile */
+    .language-buttons { grid-template-columns: repeat(2, 1fr); }
+}
+
 /* Wide screens: give dialogs more breathing room */
 @media screen and (min-width: 600px) {
     x-paper.dlg-v2 { max-width: 540px; }
