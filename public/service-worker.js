@@ -1,4 +1,4 @@
-const cacheVersion = 'v2.1.23';
+const cacheVersion = 'v2.1.24';
 const cacheTitle = `ximdrop-cache-${cacheVersion}`;
 const relativePathsToCache = [
     './',

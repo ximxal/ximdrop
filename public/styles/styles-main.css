@@ -1324,26 +1324,49 @@ x-dialog:not([show]) x-background { opacity: 0; pointer-events: none; }
 /* Edge */
 @supports (-ms-ime-align: auto) { html, body { overflow: hidden; } }
 
-/* ---- Mobile header: logo + menu only, clean single row ---- */
+/* ---- Mobile header: compact single row ---- */
 @media screen and (max-width: 600px) {
     header {
-        padding: 0 14px;
-        min-height: 56px;
+        padding: 0 12px;
+        min-height: 52px;
+        gap: 8px;
         flex-wrap: nowrap;
     }
 
-    /* Hide identity section — name/discovery not needed in header on mobile */
-    #header-identity { display: none !important; }
-
-    /* Hide conn dot — saves space */
-    #conn-status { display: none !important; }
-
     #header-left {
         flex-shrink: 1 !important;
-        gap: 0;
+        min-width: 0;
+        gap: 8px;
     }
 
-    #brand-wordmark { font-size: 19px; }
+    #header-identity {
+        flex-shrink: 1 !important;
+        min-width: 0;
+        gap: 5px;
+    }
+
+    /* ซ่อนแค่ข้อความ label ยาวๆ เก็บแค่ pill */
+    .known-as-wrapper > span[data-i18n-key="footer.known-as"],
+    .discovery-wrapper > span[data-i18n-key="footer.discovery"] {
+        display: none !important;
+    }
+
+    #brand-wordmark { font-size: 16px; }
+
+    .known-as-wrapper { gap: 3px; }
+    #display-name {
+        font-size: 11px;
+        max-width: 6em;
+        padding: 1px 5px;
+    }
+
+    .discovery-wrapper {
+        font-size: 11px;
+        padding: 2px 7px;
+        gap: 3px;
+    }
+
+    #conn-status { display: none !important; }
 }
 
 /* ---- Donate overlay ---- */
