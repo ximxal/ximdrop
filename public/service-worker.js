@@ -1,4 +1,4 @@
-const cacheVersion = 'v2.1.28';
+const cacheVersion = 'v2.1.29';
 const cacheTitle = `ximdrop-cache-${cacheVersion}`;
 const relativePathsToCache = [
     './',
@@ -180,21 +180,18 @@ self.addEventListener('fetch', function(event) {
 // on activation, we clean up the previously registered service workers
 self.addEventListener('activate', evt => {
     console.log("Activate sw:", cacheVersion);
-    evt.waitUntil(clients.claim());
-    return evt.waitUntil(
-        caches
-            .keys()
-            .then(cacheNames => {
-                return Promise.all(
-                    cacheNames.map(cacheName => {
-                        if (cacheName !== cacheTitle) {
-                            console.log("Delete cache:", cacheName);
-                            return caches.delete(cacheName);
-                        }
-                    })
-                );
-            })
-    )
+    evt.waitUntil(
+        caches.keys()
+            .then(cacheNames => Promise.all(
+                cacheNames.map(cacheName => {
+                    console.log("Delete cache:", cacheName);
+                    return caches.delete(cacheName);
+                })
+            ))
+            .then(() => clients.claim())
+            .then(() => self.clients.matchAll({ type: 'window' }))
+            .then(windowClients => windowClients.forEach(client => client.navigate(client.url)))
+    );
 });
 
 const evaluateRequestData = function (request) {
