@@ -1324,49 +1324,59 @@ x-dialog:not([show]) x-background { opacity: 0; pointer-events: none; }
 /* Edge */
 @supports (-ms-ime-align: auto) { html, body { overflow: hidden; } }
 
-/* ---- Mobile header: compact single row ---- */
+/* ---- Mobile: clean header + name below subtitle + menu bottom-left ---- */
 @media screen and (max-width: 600px) {
+    /* Header: logo only */
     header {
-        padding: 0 12px;
-        min-height: 52px;
+        padding: 0 16px;
+        min-height: 54px;
         gap: 8px;
         flex-wrap: nowrap;
     }
+    #header-identity { display: none !important; }
+    #conn-status     { display: none !important; }
+    #header-left     { flex-shrink: 1 !important; gap: 0; }
 
-    #header-left {
-        flex-shrink: 1 !important;
-        min-width: 0;
-        gap: 8px;
+    /* Keep space where menu button was so logo stays left */
+    #header-right { width: 50px; visibility: hidden; }
+
+    /* ⋮ button fixed bottom-left */
+    #menu-btn {
+        position: fixed !important;
+        bottom: 28px;
+        left: 20px;
+        z-index: 500;
+        width: 50px;
+        height: 50px;
+        border-radius: 16px;
+        background: rgba(147,51,234,0.18) !important;
+        border: 1px solid rgba(147,51,234,0.35) !important;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        visibility: visible;
     }
 
-    #header-identity {
-        flex-shrink: 1 !important;
-        min-width: 0;
+    /* Name row below subtitle */
+    #mobile-name-row {
+        display: flex;
+        align-items: center;
         gap: 5px;
+        margin-top: 10px;
     }
 
-    /* ซ่อนแค่ข้อความ label ยาวๆ เก็บแค่ pill */
-    .known-as-wrapper > span[data-i18n-key="footer.known-as"],
-    .discovery-wrapper > span[data-i18n-key="footer.discovery"] {
-        display: none !important;
+    #mobile-display-name {
+        font-weight: 700;
+        color: var(--c-primary-lt);
+        font-size: 14px;
+        padding: 2px 10px;
+        border-radius: 8px;
+        background: rgba(147,51,234,0.12);
     }
+}
 
-    #brand-wordmark { font-size: 16px; }
-
-    .known-as-wrapper { gap: 3px; }
-    #display-name {
-        font-size: 11px;
-        max-width: 6em;
-        padding: 1px 5px;
-    }
-
-    .discovery-wrapper {
-        font-size: 11px;
-        padding: 2px 7px;
-        gap: 3px;
-    }
-
-    #conn-status { display: none !important; }
+/* Desktop: hide mobile name row */
+@media screen and (min-width: 601px) {
+    #mobile-name-row { display: none !important; }
 }
 
 /* ---- Donate overlay ---- */

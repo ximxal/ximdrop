@@ -255,6 +255,8 @@ class FooterUI {
 
     _insertDisplayName(displayName) {
         this.$displayName.textContent = displayName;
+        const $m = document.getElementById('mobile-display-name');
+        if ($m) $m.textContent = displayName;
     }
 
     _onKeyDownDisplayName(e) {
