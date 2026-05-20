@@ -77,6 +77,10 @@ class XimDrop {
                     console.log('Service Worker registered');
                     window.serviceWorker = serviceWorker
                 });
+            // Auto-reload when a new SW version takes over
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                window.location.reload();
+            });
         }
     }
 
